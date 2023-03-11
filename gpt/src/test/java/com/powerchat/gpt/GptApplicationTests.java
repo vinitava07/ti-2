@@ -2,6 +2,7 @@ package com.powerchat.gpt;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.net.URI;
@@ -14,28 +15,16 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
 
 import org.springframework.boot.test.context.SpringBootTest;
-
+import org.springframework.util.Assert;
 
 
 @SpringBootTest
 class GptApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void requestOpenAICompletionReturnsNonEmptyValue() {
+		PowerChatHttpClient client = new PowerChatHttpClient();
+		String response = client.requestOpenAICompletion();
+		assertNotNull(response);
 	}
-	@Test
-	void requestChatGPT() throws IOException, InterruptedException {
-		HttpRequest request = HttpRequest.newBuilder()
-		         .uri(URI.create("http://foo.com/"))
-		         .build();
-		HttpClient client = HttpClient.newBuilder()
-		        .version(Version.HTTP_1_1)
-		        .followRedirects(Redirect.NORMAL)
-		        .connectTimeout(Duration.ofSeconds(20))
-		        .build();
-		   HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-		   System.out.println(response.statusCode());
-		   System.out.println(response.body());
-	}
-
 }

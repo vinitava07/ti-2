@@ -12,21 +12,32 @@ import java.time.Duration;
 
 public class PowerChatHttpClient {
 	private HttpClient client;
-	private HttpRequest request;
 	
 	PowerChatHttpClient() {
-		request = HttpRequest.newBuilder()
-		         .uri(URI.create("http://foo.com/"))
-		         .build();
 		client = HttpClient.newBuilder()
 		        .version(Version.HTTP_1_1)
 		        .followRedirects(Redirect.NORMAL)
 		        .connectTimeout(Duration.ofSeconds(20))
 		        .build();
-		   HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-		   System.out.println(response.statusCode());
-		   System.out.println(response.body());
 	}
-	
-	
+
+	String requestOpenAICompletion() {
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create("https://api.openai.com/v1/completions"))
+				.header("Authorization", "Bearer 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")
+				.header("Content-Type", "application/json")
+				.POST(HttpRequest.BodyPublishers.ofString("\t{\n" +
+						"\t\t\"model\": \"text-davinci-003\",\n" +
+						"\t\t\"prompt\": \"me diga por que deveria estudar ciencia da computacao em 10 palavras\",\n" +
+						"\t\t\"temperature\": 0,\n" +
+						"\t\t\"max_tokens\": 50\n" +
+						"\t\t}"))
+				.build();
+		try {
+			return client.send(request, BodyHandlers.ofString()).body();
+		} catch (Exception e) {
+			System.out.println("Shit happened: " + e);
+		}
+		return "";
+	}
 }
