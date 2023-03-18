@@ -20,3 +20,11 @@ created_at timestamp,
 expiration_date timestamp,
 is_active boolean
 );
+
+create table if not exists powerchat.question (
+ question_subscription uuid references powerchat.subscription(id),
+ question text,
+ reply text,
+ created_at timestamp,
+ id uuid default gen_random_uuid() primary key
+);
