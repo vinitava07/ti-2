@@ -49,8 +49,15 @@ class _LoginScreenState extends State<LoginScreen> {
               const Text('Login'),
               Form(
                 key: _formKey,
-                child: Column(
-                  children: [emailField],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      emailField,
+                      const SizedBox(height: 8.0),
+                      passwordField
+                    ],
+                  ),
                 ),
               ),
               //TEXTFIELD -> password
@@ -65,9 +72,29 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget get emailField {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
+      decoration: const InputDecoration(
+        labelText: 'email',
+        border: OutlineInputBorder(),
+      ),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter email address';
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget get passwordField {
+    return TextFormField(
+      keyboardType: TextInputType.visiblePassword,
+      decoration: const InputDecoration(
+        labelText: 'password',
+        border: OutlineInputBorder(),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter password';
         }
         return null;
       },
