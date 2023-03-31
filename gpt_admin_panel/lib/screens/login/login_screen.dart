@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gpt_admin_panel/main.dart';
 import 'package:gpt_admin_panel/screens/dashboard/dashboard_screen.dart';
-import 'package:gpt_admin_panel/ui/components/atoms/large_headline.dart';
+import 'package:gpt_admin_panel/ui/components/atoms/title_large.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/primary_button.dart';
 import 'package:gpt_admin_panel/ui/constants/app_colors.dart';
+import 'package:gpt_admin_panel/ui/constants/app_radius.dart';
+import 'package:gpt_admin_panel/ui/constants/app_spacing.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -25,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
           width: 320,
           decoration: BoxDecoration(
             color: AppColors.lightBG,
-            borderRadius: BorderRadius.circular(18.0),
+            borderRadius: BorderRadius.circular(AppRadius.l),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -33,14 +35,11 @@ class _LoginScreenState extends State<LoginScreen> {
               const Spacer(),
               const TitleLarge('PowerChat GPT Admin'),
               const Spacer(),
-              const Text('Login'),
-              const Spacer(
-                flex: 2,
-              ),
               Form(
                 key: _formKey,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppSpacing.l, vertical: AppSpacing.m),
                   child: Column(
                     children: [
                       emailField,
@@ -79,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget get passwordField {
     return TextFormField(
-      keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
       decoration: const InputDecoration(
         labelText: 'password',
         border: OutlineInputBorder(),

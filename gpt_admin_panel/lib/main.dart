@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gpt_admin_panel/screens/login/login_screen.dart';
 
@@ -10,10 +11,19 @@ class GPTAdminPanelApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
+      scrollBehavior: AppScrollBehavior(),
       title: 'Powerchat GPT - Admin',
-      home: LoginScreen(),
+      home: const LoginScreen(),
     );
   }
+}
+
+class AppScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }
