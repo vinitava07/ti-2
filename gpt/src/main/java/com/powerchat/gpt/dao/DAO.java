@@ -1,4 +1,4 @@
-package dao;
+package com.powerchat.gpt.dao;
 
 import java.sql.*;
 import java.security.*;
@@ -14,7 +14,7 @@ public class DAO {
     public boolean connect() {
         String driverName = "org.postgresql.Driver";
         String serverName = "localhost";
-        String mydatabase = "";
+        String myDatabase = "";
         int port = 5432;
         String url = "jdbc:postgresql://" + serverName + ":" + port +"/" + myDatabase;
         String username = "";

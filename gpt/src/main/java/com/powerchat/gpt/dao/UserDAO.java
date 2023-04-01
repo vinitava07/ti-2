@@ -1,168 +1,98 @@
-package dao;
+package com.powerchat.gpt.dao;
+
+import com.powerchat.gpt.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Usuario;
-
 public class UserDAO extends DAO {
-	
-    
+
 	public UserDAO() {
 		super();
 	}
 
-    public boolean connect (){
-        return super.connect();
-    }
+	public boolean connect() {
+		return super.connect();
+	}
 
 	public boolean close() {
-        return super.close();
+		return super.close();
 	}
-	
-	
+
 	public boolean insert(User user) {
 		boolean status = false;
-		try {  
+		try {
 			Statement st = connection.createStatement();
 			String sql = "INSERT INTO user (name, email, phone_number) "
-				       + "VALUES ("+user.getName()+ ", '" + user.getEmail() + "', '"  
-				       + usuario.getPhoneNumber() + "'');";
+					+ "VALUES (" + user.getName() + ", '" + user.getEmail() + "', '"
+					+ user.getPhoneNumber() + "'');";
 			System.out.println(sql);
 			st.executeUpdate(sql);
 			st.close();
 			status = true;
-		} catch (SQLException u) {  
+		} catch (SQLException u) {
 			throw new RuntimeException(u);
 		}
 		return status;
 	}
 
-	
+
 	public User get(String phoneNumber) {
 		User user = null;
-		
 		try {
-			Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			String sql = "SELECT * FROM user WHERE phone_number=" + phoneNumber;
 			System.out.println(sql);
-			ResultSet rs = st.executeQuery(sql);	
-	        if(rs.next()){            
-	        	 user = new User(rs.getString("name"), rs.getString("email"), rs.getString("phone_number"));
-	        }
-	        st.close();
+			ResultSet rs = st.executeQuery(sql);
+			if (rs.next()) {
+				user = createFrom(rs);
+			}
+			st.close();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 		return user;
 	}
-	
-	
-	public List<Usuario> get() {
-		return get("");
-	}
 
-	
-	public List<Usuario> getOrderByCodigo() {
-		return get("codigo");		
-	}
-	
-	
-	public List<Usuario> getOrderByLogin() {
-		return get("login");		
-	}
-	
-	
-	public List<Usuario> getOrderBySexo() {
-		return get("sexo");		
-	}
-	
-	
-	private List<Usuario> getAll(String orderBy) {	
-	
-		List<Usuario> usuarios = new ArrayList<Usuario>();
-		
-		try {
-			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM usuario" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
-			System.out.println(sql);
-			ResultSet rs = st.executeQuery(sql);	           
-	        while(rs.next()) {	            	
-	        	Usuario u = new Usuario(rs.getInt("codigo"), rs.getString("login"), rs.getString("senha"), rs.getString("sexo").charAt(0));
-	            usuarios.add(u);
-	        }
-	        st.close();
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-		}
-		return usuarios;
-	}
+	public List<User> getAll() {
+		List<User> users = new ArrayList<User>();
 
-
-	public List<Usuario> getSexoMasculino() {
-		List<Usuario> usuarios = new ArrayList<Usuario>();
-		
 		try {
-			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM usuario WHERE usuario.sexo LIKE 'M'";
-			System.out.println(sql);
-			ResultSet rs = st.executeQuery(sql);	           
-	        while(rs.next()) {	            	
-	        	Usuario u = new Usuario(rs.getInt("codigo"), rs.getString("login"), rs.getString("senha"), rs.getString("sexo").charAt(0));
-	            usuarios.add(u);
-	        }
-	        st.close();
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-		}
-		return usuarios;
-	}
-	
-	
-	public boolean update(Usuario usuario) {
-		boolean status = false;
-		try {  
-			Statement st = conexao.createStatement();
-			String sql = "UPDATE usuario SET login = '" + usuario.getLogin() + "', senha = '"  
-				       + usuario.getSenha() + "', sexo = '" + usuario.getSexo() + "'"
-					   + " WHERE codigo = " + usuario.getCodigo();
-			System.out.println(sql);
-			st.executeUpdate(sql);
-			st.close();
-			status = true;
-		} catch (SQLException u) {  
-			throw new RuntimeException(u);
-		}
-		return status;
-	}
-	
-	public boolean delete(int codigo) {
-		boolean status = false;
-		try {  
-			Statement st = conexao.createStatement();
-			String sql = "DELETE FROM usuario WHERE codigo = " + codigo;
-			System.out.println(sql);
-			st.executeUpdate(sql);
-			st.close();
-			status = true;
-		} catch (SQLException u) {  
-			throw new RuntimeException(u);
-		}
-		return status;
-	}
-	
-	
-	public boolean autenticar(String login, String senha) {
-		boolean resp = false;
-		
-		try {
-			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM usuario WHERE login LIKE '" + login + "' AND senha LIKE '" + senha  + "'";
+			Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			String sql = "SELECT * FROM user";
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);
-			resp = rs.next();
-	        st.close();
+			while (rs.next()) {
+				User u = createFrom(rs);
+				users.add(u);
+			}
+			st.close();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		return users;
+	}
+
+	private User createFrom(ResultSet queryResult) throws Exception {
+		return new User(queryResult.getString("name"), queryResult.getString("email"), queryResult.getString("phone_number"));
+	}
+
+	public boolean update(User user) {
+		boolean status = false;
+		try {
+			Statement st = connection.createStatement();
+			String sql = "UPDATE user SET email = '" + user.getEmail() + "', name = '"
+					+ user.getName() + "'"
+					+ " WHERE phone_number = '" + user.getPhoneNumber() + "';";
+			System.out.println(sql);
+			st.executeUpdate(sql);
+			st.close();
+			status = true;
+		} catch (SQLException u) {
+			throw new RuntimeException(u);
+		}
+		return status;
+	}
+}
+	
