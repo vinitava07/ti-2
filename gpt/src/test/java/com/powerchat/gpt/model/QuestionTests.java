@@ -4,6 +4,9 @@ import com.powerchat.gpt.PowerChatHttpClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Timestamp;
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -12,11 +15,11 @@ public class QuestionTests {
     @Test
     void init_setAllPropertiesCorrectly() {
 
-        UUID id = new UUID.randomUUID();
+        UUID id = UUID.randomUUID();
         String question = "question";
         String reply = "reply";
-        TimeStamp createdAt = new TimeStamp(System.currentTimeMillis());
-        UUID subscriptionId = new UUID.randomUUID();
+        Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+        UUID subscriptionId = UUID.randomUUID();
         Question question1 = new Question(id,question,reply,createdAt,subscriptionId);
         assertEquals(question1.getId(),id);
         assertEquals(question1.getQuestion(),question);
@@ -27,13 +30,13 @@ public class QuestionTests {
 
     }
     @Test
-    void init_setAllPropertiesCorrectly() {
+    void init_setReplyChangesValuesCorrectly() {
 
-        UUID id = new UUID.randomUUID();
+        UUID id = UUID.randomUUID();
         String question = "question";
         String reply = "reply";
-        TimeStamp createdAt = new TimeStamp(System.currentTimeMillis());
-        UUID subscriptionId = new UUID.randomUUID();
+        Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+        UUID subscriptionId = UUID.randomUUID();
         Question question1 = new Question(id,question,createdAt,subscriptionId);
         assertEquals(question1.getReply(),"");
         question1.setReply(reply);

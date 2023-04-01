@@ -5,6 +5,7 @@ import com.powerchat.gpt.model.Question;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class QuestionDAO extends DAO {
 
@@ -25,7 +26,8 @@ public class QuestionDAO extends DAO {
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO question (question_subscription, question, reply, created_at, id) "
-                    + "VALUES (" + question.get() +"'');";
+                    + "VALUES (" + question.getSubscriptionId() + ", '" + question.getQuestion() + "', '"
+                    + question.getReply() + ", '" + question.getCreatedAt() + ", '" + question.getId() + "';";
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
@@ -37,53 +39,55 @@ public class QuestionDAO extends DAO {
     }
 
 
-    public User get(String phoneNumber) {
-        User user = null;
+    public Question get(String phoneNumber) {
+        Question question = null;
         try {
             Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             String sql = "SELECT * FROM user WHERE phone_number=" + phoneNumber;
             System.out.println(sql);
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
-                user = createFrom(rs);
+                question = createFrom(rs);
             }
             st.close();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-        return user;
+        return question;
     }
 
-    public List<User> getAll() {
-        List<User> users = new ArrayList<User>();
+    public List<Question> getAll() {
+        List<Question> questions = new ArrayList<Question>();
 
         try {
             Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM user";
+            String sql = "SELECT * FROM question";
             System.out.println(sql);
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                User u = createFrom(rs);
-                users.add(u);
+                Question q = createFrom(rs);
+                questions.add(q);
             }
             st.close();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-        return users;
+        return questions;
     }
 
-    private User createFrom(ResultSet queryResult) throws Exception {
-        return new User(queryResult.getString("name"), queryResult.getString("email"), queryResult.getString("phone_number"));
+    private Question createFrom(ResultSet queryResult) throws Exception {
+        UUID id = UUID.fromString(queryResult.getString("id"));
+        UUID subscriptionId = UUID.fromString(queryResult.getString("id"));
+        return new Question(id, queryResult.getString("question"), queryResult.getString("reply"), queryResult.getTimestamp("created_at"),subscriptionId);
     }
 
-    public boolean update(User user) {
+    public boolean update(Question question) {
         boolean status = false;
         try {
             Statement st = connection.createStatement();
-            String sql = "UPDATE user SET email = '" + user.getEmail() + "', name = '"
-                    + user.getName() + "'"
-                    + " WHERE phone_number = '" + user.getPhoneNumber() + "';";
+            String sql = "UPDATE question SET question = '" + question.getQuestion() + "', reply = '"
+                    + question.getReply() + "'"
+                    + " WHERE id = '" + question.getId() + "';";
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();

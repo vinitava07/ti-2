@@ -1,15 +1,23 @@
-class Question {
+package com.powerchat.gpt.model;
+
+import java.util.UUID;
+
+import java.sql.Timestamp;
+
+import java.util.Date;
+
+public class Question {
 
     private final UUID id;
     private final String question;
 
     private String reply;
 
-    private final TimeStamp createdAt;
+    private final Timestamp createdAt;
 
     private final UUID subscriptionId;
 
-    Question(UUID id, String question, String reply, TimeStamp createdAt, UUID subscriptionId) {
+    public Question(UUID id, String question, String reply, Timestamp createdAt, UUID subscriptionId) {
 
         this.id = id;
         this.question = question;
@@ -18,7 +26,7 @@ class Question {
         this.subscriptionId = subscriptionId;
     }
 
-    Question(UUID id, String question, TimeStamp createdAt, UUID subscriptionId) {
+    public Question(UUID id, String question, Timestamp createdAt, UUID subscriptionId) {
 
         this.id = id;
         this.question = question;
@@ -42,7 +50,7 @@ class Question {
         this.reply = reply;
     }
 
-    public TimeStamp getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
