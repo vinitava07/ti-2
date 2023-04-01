@@ -6,25 +6,29 @@ import java.util.List;
 
 import model.Usuario;
 
-public class UsuarioDAO extends DAO {
+public class UserDAO extends DAO {
 	
-	public UsuarioDAO() {
+    
+	public UserDAO() {
 		super();
-		conectar();
 	}
 
-	public void finalize() {
-		close();
+    public boolean connect (){
+        return super.connect();
+    }
+
+	public boolean close() {
+        return super.close();
 	}
 	
 	
-	public boolean insert(Usuario usuario) {
+	public boolean insert(User user) {
 		boolean status = false;
 		try {  
-			Statement st = conexao.createStatement();
-			String sql = "INSERT INTO usuario (codigo, login, senha, sexo) "
-				       + "VALUES ("+usuario.getCodigo()+ ", '" + usuario.getLogin() + "', '"  
-				       + usuario.getSenha() + "', '" + usuario.getSexo() + "');";
+			Statement st = connection.createStatement();
+			String sql = "INSERT INTO user (name, email, phone_number) "
+				       + "VALUES ("+user.getName()+ ", '" + user.getEmail() + "', '"  
+				       + usuario.getPhoneNumber() + "'');";
 			System.out.println(sql);
 			st.executeUpdate(sql);
 			st.close();
@@ -36,22 +40,22 @@ public class UsuarioDAO extends DAO {
 	}
 
 	
-	public Usuario get(int codigo) {
-		Usuario usuario = null;
+	public User get(String phoneNumber) {
+		User user = null;
 		
 		try {
-			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM produto WHERE id=" + codigo;
+			Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			String sql = "SELECT * FROM user WHERE phone_number=" + phoneNumber;
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);	
 	        if(rs.next()){            
-	        	 usuario = new Usuario(rs.getInt("codigo"), rs.getString("login"), rs.getString("senha"), rs.getString("sexo").charAt(0));
+	        	 user = new User(rs.getString("name"), rs.getString("email"), rs.getString("phone_number"));
 	        }
 	        st.close();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		return usuario;
+		return user;
 	}
 	
 	
@@ -75,7 +79,7 @@ public class UsuarioDAO extends DAO {
 	}
 	
 	
-	private List<Usuario> get(String orderBy) {	
+	private List<Usuario> getAll(String orderBy) {	
 	
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		
