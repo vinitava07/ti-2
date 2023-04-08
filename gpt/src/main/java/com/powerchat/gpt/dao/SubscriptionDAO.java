@@ -83,13 +83,13 @@ public class SubscriptionDAO extends DAO {
                  queryResult.getBoolean("is_active"), queryResult.getTimestamp("expiration_date"));
     }
 
-    public boolean update(Question question) {
+    public boolean update(Subscription subscription) {
         boolean status = false;
         try {
             Statement st = connection.createStatement();
-            String sql = "UPDATE question SET question = '" + question.getQuestion() + "', reply = '"
-                    + question.getReply() + "'"
-                    + " WHERE id = '" + question.getId() + "';";
+            String sql = "UPDATE subscription SET subscription_user = '" + subscription.userID + "', plan = '"
+                    + subscription.planID + "'" + "', created_at = '" + subscription.createdAt + "', expiration_date = '" + subscription.expirationDate + "', is_active = '"
+                    + subscription.isActive + " WHERE id = '" + subscription.id + "';";
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
