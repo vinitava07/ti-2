@@ -14,8 +14,8 @@ public class SubscriptionTests {
     @Test
     void init_setAllPropertiesCorrectly() {
         UUID id = UUID.randomUUID();
-        UUID userID = UUID.randomUUID();
-        UUID planID = UUID.randomUUID();
+        String userID = "User";
+        String planID = "plan'";
         Timestamp createdAt = Timestamp.from(Instant.now());
         Timestamp expirationDate = Timestamp.from(Instant.now());
         boolean isActive = true;

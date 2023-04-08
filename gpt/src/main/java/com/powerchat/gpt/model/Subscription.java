@@ -4,19 +4,19 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 public class Subscription {
-    final UUID id;
+    public final UUID id;
 
-    final UUID userID;
+    public final String userID;
 
-    final UUID planID;
+    public final String planID;
 
-    final Timestamp createdAt;
+    public final Timestamp createdAt;
 
-    boolean isActive;
+    public boolean isActive;
 
-    final Timestamp expirationDate;
+    public final Timestamp expirationDate;
 
-    Subscription(UUID id, UUID userID, UUID planID, Timestamp createdAt, boolean isActive, Timestamp expirationDate){
+    public Subscription(UUID id, String userID, String planID, Timestamp createdAt, boolean isActive, Timestamp expirationDate){
         this.id = id;
         this.userID = userID;
         this.planID = planID;
