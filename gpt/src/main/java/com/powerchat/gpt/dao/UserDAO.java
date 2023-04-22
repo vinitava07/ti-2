@@ -23,13 +23,15 @@ public class UserDAO extends DAO {
 	public boolean insert(User user) {
 		boolean status = false;
 		try {
+
 			Statement st = connection.createStatement();
-			String sql = "INSERT INTO user (name, email, phone_number) "
-					+ "VALUES (" + user.getName() + ", '" + user.getEmail() + "', '"
-					+ user.getPhoneNumber() + "'');";
+			String sql = "INSERT INTO powerchat.user (name, email, phone_number) "
+					+ "VALUES ('" + user.getName() + "', '" + user.getEmail() + "', '"
+					+ user.getPhoneNumber() + "');";
 			System.out.println(sql);
 			st.executeUpdate(sql);
 			st.close();
+
 			status = true;
 		} catch (SQLException u) {
 			throw new RuntimeException(u);
