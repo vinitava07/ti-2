@@ -9,7 +9,7 @@ public class PlanTests {
 
     @Test
     void init_setAllPropertiesCorrectly() {
-        UUID id = UUID.randomUUID();
+        String id = "plan";
         String name = "test";
         int monthlyPromptLimit = 0;
         Plan plan = new Plan(id, name, monthlyPromptLimit);
