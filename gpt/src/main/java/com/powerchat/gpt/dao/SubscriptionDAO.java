@@ -26,10 +26,10 @@ public class SubscriptionDAO extends DAO {
         boolean status = false;
         try {
             Statement st = connection.createStatement();
-            String sql = "INSERT INTO subscription (id, subscription_user, plan, created_at, expiration_date, is_active) "
-                    + "VALUES (" + subscription.id + ", '" + subscription.userID + "', '"
-                    + subscription.planID + ", '" + subscription.createdAt + ", '" + subscription.expirationDate + ", '" +
-                     subscription.isActive + "';";
+            String sql = "INSERT INTO powerchat.subscription (id, subscription_user, plan, created_at, expiration_date, is_active) "
+                    + "VALUES ('" + subscription.id + "', '" + subscription.userID + "', '"
+                    + subscription.planID + "', '" + subscription.createdAt + "', '" + subscription.expirationDate + "', " +
+                     subscription.isActive + ");";
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
@@ -41,11 +41,11 @@ public class SubscriptionDAO extends DAO {
     }
 
 
-    public Subscription get(UUID id) {
+    public Subscription getById(UUID id) {
         Subscription subscription = null;
         try {
             Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM subscription WHERE id=" + id;
+            String sql = "SELECT * FROM powerchat.subscription WHERE id='" + id +"';";
             System.out.println(sql);
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
@@ -63,7 +63,7 @@ public class SubscriptionDAO extends DAO {
 
         try {
             Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM subscription";
+            String sql = "SELECT * FROM powerchat.subscription;";
             System.out.println(sql);
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -87,8 +87,8 @@ public class SubscriptionDAO extends DAO {
         boolean status = false;
         try {
             Statement st = connection.createStatement();
-            String sql = "UPDATE subscription SET subscription_user = '" + subscription.userID + "', plan = '"
-                    + subscription.planID + "'" + "', created_at = '" + subscription.createdAt + "', expiration_date = '" + subscription.expirationDate + "', is_active = '"
+            String sql = "UPDATE powerchat.subscription SET subscription_user = '" + subscription.userID + "', plan = '"
+                    + subscription.planID + "', created_at = '" + subscription.createdAt + "', expiration_date = '" + subscription.expirationDate + "', is_active = "
                     + subscription.isActive + " WHERE id = '" + subscription.id + "';";
             System.out.println(sql);
             st.executeUpdate(sql);

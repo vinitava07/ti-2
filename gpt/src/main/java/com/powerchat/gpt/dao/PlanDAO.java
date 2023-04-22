@@ -27,9 +27,9 @@ public class PlanDAO extends DAO {
         boolean status = false;
         try {
             Statement st = connection.createStatement();
-            String sql = "INSERT INTO plan (id, name, monthly_prompt_limit) "
+            String sql = "INSERT INTO powerchat.plan (id, name, monthly_prompt_limit) "
                     + "VALUES (" + plan.id + ", '" + plan.name + "', '"
-                    + plan.monthlyPromptLimit + "';";
+                    + plan.monthlyPromptLimit + "');";
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
@@ -41,11 +41,11 @@ public class PlanDAO extends DAO {
     }
 
 
-    public Plan get(String id) {
+    public Plan getById(String id) {
         Plan plan = null;
         try {
             Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM plan WHERE id=" + id;
+            String sql = "SELECT * FROM powerchat.plan WHERE id='" +id + "';";
             System.out.println(sql);
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
@@ -63,7 +63,7 @@ public class PlanDAO extends DAO {
 
         try {
             Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM plan";
+            String sql = "SELECT * FROM powerchat.plan;";
             System.out.println(sql);
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -86,7 +86,7 @@ public class PlanDAO extends DAO {
         boolean status = false;
         try {
             Statement st = connection.createStatement();
-            String sql = "UPDATE plan SET name = '" + plan.name + "', monthly_prompt_limit = '"
+            String sql = "UPDATE powerchat.plan SET name = '" + plan.name + "', monthly_prompt_limit = '"
                     + plan.monthlyPromptLimit + "'"
                     + " WHERE id = '" + plan.id + "';";
             System.out.println(sql);

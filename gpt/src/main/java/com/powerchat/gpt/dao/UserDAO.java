@@ -40,11 +40,11 @@ public class UserDAO extends DAO {
 	}
 
 
-	public User get(String phoneNumber) {
+	public User getById(String phoneNumber) {
 		User user = null;
 		try {
 			Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM user WHERE phone_number=" + phoneNumber;
+			String sql = "SELECT * FROM powerchat.user WHERE phone_number='" + phoneNumber +"';";
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);
 			if (rs.next()) {
@@ -62,7 +62,7 @@ public class UserDAO extends DAO {
 
 		try {
 			Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM user";
+			String sql = "SELECT * FROM powerchat.user;";
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
@@ -84,7 +84,7 @@ public class UserDAO extends DAO {
 		boolean status = false;
 		try {
 			Statement st = connection.createStatement();
-			String sql = "UPDATE user SET email = '" + user.getEmail() + "', name = '"
+			String sql = "UPDATE powerchat.user SET email = '" + user.getEmail() + "', name = '"
 					+ user.getName() + "'"
 					+ " WHERE phone_number = '" + user.getPhoneNumber() + "';";
 			System.out.println(sql);

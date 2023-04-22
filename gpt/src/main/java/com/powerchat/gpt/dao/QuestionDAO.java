@@ -25,9 +25,9 @@ public class QuestionDAO extends DAO {
         boolean status = false;
         try {
             Statement st = connection.createStatement();
-            String sql = "INSERT INTO question (question_subscription, question, reply, created_at, id) "
-                    + "VALUES (" + question.getSubscriptionId() + ", '" + question.getQuestion() + "', '"
-                    + question.getReply() + ", '" + question.getCreatedAt() + ", '" + question.getId() + "';";
+            String sql = "INSERT INTO powerchat.question (question_subscription, question, reply, created_at, id) "
+                    + "VALUES ('" + question.getSubscriptionId() + "', '" + question.getQuestion() + "', '"
+                    + question.getReply() + "', '" + question.getCreatedAt() + "', '" + question.getId() + "');";
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
@@ -39,11 +39,11 @@ public class QuestionDAO extends DAO {
     }
 
 
-    public Question get(String phoneNumber) {
+    public Question getById(UUID id) {
         Question question = null;
         try {
             Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM user WHERE phone_number=" + phoneNumber;
+            String sql = "SELECT * FROM powerchat.question WHERE id='" + id + "';";
             System.out.println(sql);
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
@@ -61,7 +61,7 @@ public class QuestionDAO extends DAO {
 
         try {
             Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM question";
+            String sql = "SELECT * FROM powerchat.question;";
             System.out.println(sql);
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -85,7 +85,7 @@ public class QuestionDAO extends DAO {
         boolean status = false;
         try {
             Statement st = connection.createStatement();
-            String sql = "UPDATE question SET question = '" + question.getQuestion() + "', reply = '"
+            String sql = "UPDATE powerchat.question SET question = '" + question.getQuestion() + "', reply = '"
                     + question.getReply() + "'"
                     + " WHERE id = '" + question.getId() + "';";
             System.out.println(sql);
