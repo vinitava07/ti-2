@@ -10,11 +10,18 @@ public class UserService {
     private String json;
 
 
-    public String getJSON(){
+
+    public UserService() {
+        this.json = "";
+    }
+    public String getUserJson(){
         return json;
     }
     public void parseJSON(List<User> users)throws Exception{
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        json = ow.writeValueAsString(users.get(0));
+        for (int i = 0; i < users.size()-1; i++) {
+            json += ow.writeValueAsString(users.get(i)) + ",\n";
+        }
+        json+=ow.writeValueAsString(users.get(users.size()-1));
     }
 }
