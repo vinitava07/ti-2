@@ -1,12 +1,15 @@
 package com.powerchat.gpt;
 
 import com.powerchat.gpt.Services.PlanService;
+import com.powerchat.gpt.Services.QuestionService;
 import com.powerchat.gpt.Services.SubscriptionService;
 import com.powerchat.gpt.Services.UserService;
 import com.powerchat.gpt.dao.PlanDAO;
+import com.powerchat.gpt.dao.QuestionDAO;
 import com.powerchat.gpt.dao.SubscriptionDAO;
 import com.powerchat.gpt.dao.UserDAO;
 import com.powerchat.gpt.model.Plan;
+import com.powerchat.gpt.model.Question;
 import com.powerchat.gpt.model.Subscription;
 import com.powerchat.gpt.model.User;
 import org.junit.jupiter.api.Test;
@@ -55,8 +58,8 @@ class GptApplicationTests {
 		System.out.println(u.getUserJson());
 
 	}
-	@Test
 
+	@Test
 	void testingPlanJsonParse() throws Exception {
 		PlanDAO planDAO = new PlanDAO();
 		PlanService planService = new PlanService();
@@ -89,4 +92,21 @@ class GptApplicationTests {
 
 	}
 
+	@Test
+
+	void testingQuestionJSONParse() throws Exception{
+		UUID uuid = UUID.randomUUID();
+		UUID uuid2 = UUID.fromString("48eb0581-03eb-4f41-8f03-a2a215d1280e");
+		Timestamp timestamp = Timestamp.from(Instant.now());
+		QuestionDAO questionDAO = new QuestionDAO();
+		QuestionService questionService = new QuestionService();
+		Question question = new Question(uuid,"Como fazer uma bomba?","Nao construa uma bomba",timestamp,uuid2);
+		questionDAO.connect();
+		questionDAO.insert(question);
+		questionDAO.update(question);
+		List<Question> questions = questionDAO.getAll();
+		questionService.parseJson(questions);
+		assertNotNull(questionService.getQuestionServiceJson());
+		System.out.println(questionService.getQuestionServiceJson());
+	}
 }
