@@ -16,6 +16,7 @@ public class QuestionController {
     @GetMapping("/question")
     public ResponseEntity<String> handleHealthCheck() throws Exception {
         QuestionDAO questionDAO = new QuestionDAO();
+        questionDAO.connect();
         List<Question> questionList = questionDAO.getAll();
         QuestionService questionService = new QuestionService();
         questionService.parseJson(questionList);
