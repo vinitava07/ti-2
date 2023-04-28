@@ -13,25 +13,14 @@ import com.powerchat.gpt.model.Question;
 import com.powerchat.gpt.model.Subscription;
 import com.powerchat.gpt.model.User;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpClient.Redirect;
-import java.net.http.HttpClient.Version;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.sql.Timestamp;
-import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
 
 
 @SpringBootTest
@@ -52,25 +41,24 @@ class GptApplicationTests {
 		userDAO.insert(user);
 		userDAO.update(user);
 		List<User> users = userDAO.getAll();
-		UserService u = new UserService();
-		u.parseJSON(users);
-		assertNotNull(u.getUserJson());
-		System.out.println(u.getUserJson());
+		UserService u = new UserService(users);
+		assertNotNull(u.getJSON());
+		System.out.println(u.getJSON());
 
 	}
 
 	@Test
 	void testingPlanJsonParse() throws Exception {
 		PlanDAO planDAO = new PlanDAO();
-		PlanService planService = new PlanService();
+
 		Plan plan = new Plan("3","free",30);
 		planDAO.connect();
 		planDAO.insert(plan);
 		planDAO.update(plan);
 		List<Plan> plans = planDAO.getAll();
-		planService.parseJson(plans);
-		assertNotNull(planService.getPlanServiceJson());
-		System.out.println(planService.getPlanServiceJson());
+		PlanService planService = new PlanService(plans);
+		assertNotNull(planService.getJson());
+		System.out.println(planService.getJson());
 
 	}
 

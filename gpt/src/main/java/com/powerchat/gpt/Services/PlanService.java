@@ -8,18 +8,19 @@ import java.util.List;
 
 public class PlanService {
 
-    private String json;
+    private final List<Plan> plans;
 
-    public String getPlanServiceJson(){
-        return json;
+    public  PlanService(List<Plan> plans) {
+        this.plans = plans;
     }
 
-    public void parseJson(List<Plan> plans) throws Exception{
+    public String getJson() throws Exception{
+        StringBuilder json = new StringBuilder();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         for (int i = 0; i < plans.size()-1; i++) {
-            json += ow.writeValueAsString(plans.get(i)) + ",\n";
+            json.append(ow.writeValueAsString(plans.get(i))).append(",\n");
         }
-        json+=ow.writeValueAsString(plans.get(plans.size()-1));
+        json.append(ow.writeValueAsString(plans.get(plans.size() - 1)));
+        return json.toString();
     }
-
 }

@@ -19,6 +19,9 @@ public class GptApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GptApplication.class, args);
 		// requestOpenAICompletion();
+	}
+
+	static void testingQuestionDAO() {
 		UUID uuid = UUID.randomUUID();
 		UUID uuid2 = UUID.fromString("48eb0581-03eb-4f41-8f03-a2a215d1280e");
 		Timestamp timestamp = Timestamp.from(Instant.now());
@@ -29,12 +32,9 @@ public class GptApplication {
 		questionDAO.update(question);
 		questionDAO.getAll();
 		questionDAO.getById(uuid);
-
-
 	}
 
 	static void testingSubscriptionDAO() {
-
 		UUID uuid = UUID.randomUUID();
 		Timestamp timestamp = Timestamp.from(Instant.now());
 		SubscriptionDAO subscriptionDAO = new SubscriptionDAO();
@@ -44,7 +44,6 @@ public class GptApplication {
 		subscriptionDAO.update(subscription);
 		subscriptionDAO.getAll();
 		subscriptionDAO.getById(uuid);
-
 	}
 
 	static void testingPlanDAO() {
@@ -64,12 +63,10 @@ public class GptApplication {
 		userDAO.update(user);
 		userDAO.getAll();
 		userDAO.getById("(31) 99882-2122");
-
 	}
 	static void requestOpenAICompletion() {
 		PowerChatHttpClient client = new PowerChatHttpClient();
 		String response = client.requestOpenAICompletion();
 		System.out.println(response);
 	}
-
 }

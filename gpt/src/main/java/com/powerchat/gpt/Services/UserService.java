@@ -7,21 +7,18 @@ import com.powerchat.gpt.model.User;
 import java.util.List;
 
 public class UserService {
-    private String json;
 
-
-
-    public UserService() {
-        this.json = "";
+    private final List<User> users;
+    public UserService(List<User> users) {
+        this.users = users;
     }
-    public String getUserJson(){
-        return json;
-    }
-    public void parseJSON(List<User> users)throws Exception{
+    public String getJSON() throws Exception{
+        StringBuilder json = new StringBuilder();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         for (int i = 0; i < users.size()-1; i++) {
-            json += ow.writeValueAsString(users.get(i)) + ",\n";
+            json.append(ow.writeValueAsString(users.get(i))).append(",\n");
         }
-        json+=ow.writeValueAsString(users.get(users.size()-1));
+        json.append(ow.writeValueAsString(users.get(users.size() - 1)));
+        return json.toString();
     }
 }
