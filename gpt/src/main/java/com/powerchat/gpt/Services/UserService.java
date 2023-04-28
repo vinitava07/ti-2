@@ -15,10 +15,11 @@ public class UserService {
     public String getJSON() throws Exception{
         StringBuilder json = new StringBuilder();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        json.append("{\ndata:[\n");
         for (int i = 0; i < users.size()-1; i++) {
             json.append(ow.writeValueAsString(users.get(i))).append(",\n");
         }
-        json.append(ow.writeValueAsString(users.get(users.size() - 1)));
+        json.append(ow.writeValueAsString(users.get(users.size() - 1))+"]\n}");
         return json.toString();
     }
 }

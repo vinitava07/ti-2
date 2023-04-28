@@ -17,6 +17,7 @@ public class UserController {
     public ResponseEntity<String> handleHealthCheck() throws Exception {
         try {
             UserDAO userDAO = new UserDAO();
+            userDAO.connect();
             List<User> users = userDAO.getAll();
             String json = new UserService(users).getJSON();
             return new ResponseEntity<>(json, HttpStatus.OK);
