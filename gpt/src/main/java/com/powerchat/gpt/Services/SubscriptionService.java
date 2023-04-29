@@ -17,10 +17,11 @@ public class SubscriptionService {
 
     public void parseJson(List<Subscription> subscriptions) throws Exception{
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        json += "{\ndata:[\n";
         for (int i = 0; i < subscriptions.size()-1; i++) {
             json += ow.writeValueAsString(subscriptions.get(i)) + ",\n";
         }
-        json+=ow.writeValueAsString(subscriptions.get(subscriptions.size()-1));
+        json+=ow.writeValueAsString(subscriptions.get(subscriptions.size()-1)) + "]\n}";
     }
 
 

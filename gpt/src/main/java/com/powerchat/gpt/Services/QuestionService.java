@@ -17,10 +17,12 @@ public class QuestionService {
 
     public void parseJson(List<Question> questions) throws Exception{
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        json += "{\ndata:[\n";
+
         for (int i = 0; i < questions.size()-1; i++) {
             json += ow.writeValueAsString(questions.get(i)) + ",\n";
         }
-        json+=ow.writeValueAsString(questions.get(questions.size()-1));
+        json+=ow.writeValueAsString(questions.get(questions.size()-1)) + "]\n}";
     }
 
 }
