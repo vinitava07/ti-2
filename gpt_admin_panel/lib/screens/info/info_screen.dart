@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpt_admin_panel/screens/info/info_presenter.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/bordered_container.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/headline_medium.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/title_large.dart';
@@ -9,8 +10,9 @@ enum InfoType { users, messages }
 
 class InfoScreen extends StatefulWidget {
   final InfoType type;
+  final InfoPresenter presenter = InfoPresenterImpl();
 
-  const InfoScreen({Key? key, required this.type}) : super(key: key);
+  InfoScreen({Key? key, required this.type}) : super(key: key);
 
   @override
   State<InfoScreen> createState() => _InfoScreenState();
@@ -43,23 +45,34 @@ class _InfoScreenState extends State<InfoScreen> {
       backgroundColor: AppColors.darkBG,
       body: BorderedContainer(
         child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const HeadlineMedium('PowerChat GPT - Admin'),
-              TitleLarge(title),
-              const Divider(),
-              Flexible(
-                child: ListView.separated(
-                    itemBuilder: (BuildContext context, int index) {
-                      return tiles.elementAt(index);
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const Divider();
-                    },
-                    itemCount: tiles.length),
-              ),
-            ],
+          child: FutureBuilder(
+            future: widget.presenter.getQuestions(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const HeadlineMedium('PowerChat GPT - Admin'),
+                    TitleLarge(title),
+                    const Divider(),
+                    Flexible(
+                      child: ListView.separated(
+                          itemBuilder: (BuildContext context, int index) {
+                            return tiles.elementAt(index);
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const Divider();
+                          },
+                          itemCount: tiles.length),
+                    ),
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Text('Error on query');
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
           ),
         ),
       ),

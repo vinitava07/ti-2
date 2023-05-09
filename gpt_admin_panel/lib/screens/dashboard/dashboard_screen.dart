@@ -63,7 +63,7 @@ class DashboardScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (BuildContext context) {
-                    return const InfoScreen(type: InfoType.users);
+                    return InfoScreen(type: InfoType.users);
                   }));
                 }),
             MediumCard(
@@ -71,7 +71,7 @@ class DashboardScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (BuildContext context) {
-                    return const InfoScreen(type: InfoType.messages);
+                    return InfoScreen(type: InfoType.messages);
                   }));
                 }),
           ],
