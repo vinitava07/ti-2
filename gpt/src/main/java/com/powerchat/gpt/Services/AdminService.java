@@ -2,16 +2,16 @@ package com.powerchat.gpt.Services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.powerchat.gpt.model.Plan;
+import com.powerchat.gpt.model.Admin;
 
 import java.util.List;
 
-public class PlanService {
+public class AdminService {
 
-    private final List<Plan> plans;
+    private final List<Admin> admins;
 
-    public  PlanService(List<Plan> plans) {
-        this.plans = plans;
+    public  AdminService(List<Admin> admins) {
+        this.admins = admins;
     }
 
     public String getJson() throws Exception{
@@ -19,10 +19,10 @@ public class PlanService {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         json.append("{\ndata:[\n");
 
-        for (int i = 0; i < plans.size()-1; i++) {
-            json.append(ow.writeValueAsString(plans.get(i))).append(",\n");
+        for (int i = 0; i < admins.size()-1; i++) {
+            json.append(ow.writeValueAsString(admins.get(i))).append(",\n");
         }
-        json.append(ow.writeValueAsString(plans.get(plans.size() - 1))+"]\n}");
+        json.append(ow.writeValueAsString(admins.get(admins.size() - 1))+"]\n}");
         return json.toString();
     }
 }

@@ -1,8 +1,8 @@
 package com.powerchat.gpt.controller;
 
-import com.powerchat.gpt.Services.UserService;
-import com.powerchat.gpt.dao.UserDAO;
-import com.powerchat.gpt.model.User;
+import com.powerchat.gpt.Services.AdminService;
+import com.powerchat.gpt.dao.AdminDAO;
+import com.powerchat.gpt.model.Admin;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class UserController {
+public class AdminController {
 
-    @GetMapping("/user")
+    @GetMapping("/admin")
     public ResponseEntity<String> handleHealthCheck() throws Exception {
         try {
-            UserDAO userDAO = new UserDAO();
-            userDAO.connect();
-            List<User> users = userDAO.getAll();
-            String json = new UserService(users).getJSON();
+            AdminDAO adminDAO = new AdminDAO();
+            adminDAO.connect();
+            List<Admin> admins = adminDAO.getAll();
+            String json = new AdminService(admins).getJson();
             return new ResponseEntity<>(json, HttpStatus.OK);
         } catch(Exception e) {
-            return new ResponseEntity<>("Unable to get users Json", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Unable to get admins Json", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

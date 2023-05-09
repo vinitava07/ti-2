@@ -1,17 +1,8 @@
 package com.powerchat.gpt;
 
-import com.powerchat.gpt.Services.PlanService;
-import com.powerchat.gpt.Services.QuestionService;
-import com.powerchat.gpt.Services.SubscriptionService;
-import com.powerchat.gpt.Services.UserService;
-import com.powerchat.gpt.dao.PlanDAO;
-import com.powerchat.gpt.dao.QuestionDAO;
-import com.powerchat.gpt.dao.SubscriptionDAO;
-import com.powerchat.gpt.dao.UserDAO;
-import com.powerchat.gpt.model.Plan;
-import com.powerchat.gpt.model.Question;
-import com.powerchat.gpt.model.Subscription;
-import com.powerchat.gpt.model.User;
+import com.powerchat.gpt.Services.*;
+import com.powerchat.gpt.dao.*;
+import com.powerchat.gpt.model.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -96,5 +87,19 @@ class GptApplicationTests {
 		questionService.parseJson(questions);
 		assertNotNull(questionService.getQuestionServiceJson());
 		System.out.println(questionService.getQuestionServiceJson());
+	}
+
+	@Test
+	void adminConnectionTest() throws Exception {
+		UUID uuid = UUID.randomUUID();
+		AdminDAO adminDAO = new AdminDAO();
+		adminDAO.connect();
+		Admin admin = new Admin(uuid , "test@email.com" , "1234321");
+		adminDAO.insert(admin);
+		adminDAO.update(admin);
+		List<Admin> admins = adminDAO.getAll();
+		AdminService adm = new AdminService(admins);
+		assertNotNull(adm.getJson());
+		System.out.println(adm.getJson());
 	}
 }
