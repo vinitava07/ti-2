@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gpt_admin_panel/models/contact.dart';
+import 'package:gpt_admin_panel/models/question.dart';
 import 'package:gpt_admin_panel/screens/info/info_presenter.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/bordered_container.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/headline_medium.dart';
@@ -44,38 +46,95 @@ class _InfoScreenState extends State<InfoScreen> {
     return Scaffold(
       backgroundColor: AppColors.darkBG,
       body: BorderedContainer(
-        child: Center(
-          child: FutureBuilder(
-            future: widget.presenter.getQuestions(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.hasData) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const HeadlineMedium('PowerChat GPT - Admin'),
-                    TitleLarge(title),
-                    const Divider(),
-                    Flexible(
-                      child: ListView.separated(
-                          itemBuilder: (BuildContext context, int index) {
-                            return tiles.elementAt(index);
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return const Divider();
-                          },
-                          itemCount: tiles.length),
-                    ),
-                  ],
-                );
-              } else if (snapshot.hasError) {
-                return Text('Error on query');
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
-          ),
-        ),
+        child: Center(child: buildListForType()),
       ),
+    );
+  }
+
+  Widget buildListForType() {
+    switch (widget.type) {
+      case InfoType.messages:
+        return buildMessageList();
+      case InfoType.users:
+        return buildUsersList();
+    }
+  }
+
+  Widget buildMessageList() {
+    return FutureBuilder(
+      future: widget.presenter.getQuestions(),
+      builder: (BuildContext context, AsyncSnapshot<QuestionList> snapshot) {
+        if (snapshot.hasData) {
+          final questionList = snapshot.data!;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const HeadlineMedium('PowerChat GPT - Admin'),
+              TitleLarge(title),
+              const Divider(),
+              Flexible(
+                child: ListView.separated(
+                    itemBuilder: (BuildContext context, int index) {
+                      final question = questionList.data.elementAt(index);
+                      final prompt = question.prompt;
+                      final reply = question.reply;
+                      return ListTile(
+                        title: Text(prompt),
+                        subtitle: Text(reply),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider();
+                    },
+                    itemCount: questionList.data.length),
+              ),
+            ],
+          );
+        } else if (snapshot.hasError) {
+          return Text('Error on query');
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
+    );
+  }
+
+  Widget buildUsersList() {
+    return FutureBuilder(
+      future: widget.presenter.getUsers(),
+      builder: (BuildContext context, AsyncSnapshot<ContactList> snapshot) {
+        if (snapshot.hasData) {
+          final contactList = snapshot.data!;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const HeadlineMedium('PowerChat GPT - Admin'),
+              TitleLarge(title),
+              const Divider(),
+              Flexible(
+                child: ListView.separated(
+                    itemBuilder: (BuildContext context, int index) {
+                      final contact = contactList.data.elementAt(index);
+                      final email = contact.email;
+                      final name = contact.name;
+                      return ListTile(
+                        title: Text(email),
+                        subtitle: Text(name),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider();
+                    },
+                    itemCount: contactList.data.length),
+              ),
+            ],
+          );
+        } else if (snapshot.hasError) {
+          return Text('Error on query');
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 

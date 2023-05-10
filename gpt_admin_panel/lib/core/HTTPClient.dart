@@ -8,7 +8,7 @@ class HTTPClient {
 
   Future<http.Response> get() async {
     return await http.get(
-      Uri.parse(_path),
+      Uri.parse(_baseURL + _path),
     );
   }
 }

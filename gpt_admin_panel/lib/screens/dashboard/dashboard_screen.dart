@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpt_admin_panel/screens/dashboard/dashboard_presenter.dart';
 import 'package:gpt_admin_panel/screens/info/info_screen.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/bordered_container.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/headline_medium.dart';
@@ -8,7 +9,9 @@ import 'package:gpt_admin_panel/ui/components/molecules/medium_card.dart';
 import 'package:gpt_admin_panel/ui/constants/app_colors.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+  DashboardPresenter presenter;
+
+  DashboardScreen({Key? key, required this.presenter}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,8 @@ class DashboardScreen extends StatelessWidget {
         const TitleLarge('Métricas de serviço'),
         Row(
           children: [
-            MediumCard(text: 'Health check: ok', onTap: () {}),
+            MediumCard(
+                text: 'Health check: ok', onTap: () => presenter.checkHealth()),
             MediumCard(text: 'OpenAI integration: ok', onTap: () {}),
             MediumCard(text: 'FB Webhook: ok', onTap: () {}),
             MediumCard(text: 'FB GraphQL: ok', onTap: () {}),
