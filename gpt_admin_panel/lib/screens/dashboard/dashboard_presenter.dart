@@ -1,10 +1,43 @@
+import 'package:flutter/cupertino.dart';
+import 'package:gpt_admin_panel/core/HTTPClient.dart';
+
 abstract class DashboardPresenter {
-  Future<bool> checkHealth();
+  String get healthStatus;
+  Future<void> checkHealth();
+  Future<int> fetchUsersNumber();
+  void listen(Function() listener);
 }
 
-class DashboardPresenterImpl implements DashboardPresenter {
+class DashboardPresenterImpl with ChangeNotifier implements DashboardPresenter {
+  var _healthStatus = 'ok';
+
   @override
-  Future<bool> checkHealth() {
-    return Future.delayed(const Duration(seconds: 3), () => true);
+  Future<void> checkHealth() async {
+    _healthStatus = 'loading';
+    notifyListeners();
+
+    const route = "/health";
+    final client = HTTPClient(route);
+    final response = await client.get();
+    _healthStatus = response.body;
+    notifyListeners();
+  }
+
+  @override
+  Future<int> fetchUsersNumber() async {
+    const route = "/users_count";
+    final client = HTTPClient(route);
+    final response = await client.get();
+    return response.body as int;
+  }
+
+  @override
+  String get healthStatus {
+    return _healthStatus;
+  }
+
+  @override
+  void listen(Function() listener) {
+    addListener(listener);
   }
 }
