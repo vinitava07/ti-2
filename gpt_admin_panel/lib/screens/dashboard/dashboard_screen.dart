@@ -32,8 +32,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       backgroundColor: AppColors.darkBG,
       body: BorderedContainer(
         child: Center(
-          child: Column(
-            children: [dataFields(context)],
+          child: SingleChildScrollView(
+            child: dataFields(context),
           ),
         ),
       ),
