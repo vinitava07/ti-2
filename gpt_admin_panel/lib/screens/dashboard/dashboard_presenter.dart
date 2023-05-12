@@ -25,10 +25,11 @@ class DashboardPresenterImpl with ChangeNotifier implements DashboardPresenter {
 
   @override
   Future<int> fetchUsersNumber() async {
-    const route = "/users_count";
-    final client = HTTPClient(route);
-    final response = await client.get();
-    return response.body as int;
+    // const route = "/users_count";
+    // final client = HTTPClient(route);
+    // final response = await client.get();
+    // return response.body as int;
+    return Future.value(0);
   }
 
   @override
