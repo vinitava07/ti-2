@@ -18,8 +18,8 @@ class GPTAdminPanelApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       scrollBehavior: AppScrollBehavior(),
       title: 'Powerchat GPT - Admin',
-      home: DashboardScreen(
-        presenter: DashboardPresenterImpl(),
+      home: LoginScreen(
+        
       ),
     );
   }

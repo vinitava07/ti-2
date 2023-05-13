@@ -11,4 +11,20 @@ class HTTPClient {
       Uri.parse(_baseURL + _path),
     );
   }
+
+  Future<http.Response> post() async {
+    return await http.post(
+      Uri.parse(_baseURL + _path),
+      /**
+       * final body = {
+          'name': 'Bob',
+          'age': '87',
+        };
+        final jsonString = json.encode(body);
+        final uri = Uri.http('www.example.com', '/path');
+        final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
+        final response = await http.post(uri, headers: headers, body: jsonString);
+       */
+    );
+  }
 }
