@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 
 class LoginPresenter {
   Future<bool> login(String email, String password) async {
-    const path = "/login";
+    const path = '/login';
     final client = HTTPClient(path);
-    http.Response response = await client.post();
+    http.Response response = await client.post({'email':email,'password':password});
     return response.statusCode == 200;
   }
 }
