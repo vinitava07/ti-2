@@ -4,7 +4,7 @@ create schema powerchat;
 create table if not exists powerchat.user (
 name varchar(255),
 email varchar(255),
-phone_number varchar(50) primary key,
+phone_number varchar(50) primary key
 );
 
 create table if not exists powerchat.plan (
