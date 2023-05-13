@@ -83,7 +83,7 @@ public class AdminDAO extends DAO{
         try {
             Statement st = connection.createStatement();
             String sql = "UPDATE powerchat.admin SET email = '" + admin.getEmail() + "', password = '"
-                    + admin.getPassword() + "';";
+                    + admin.getEncryptedPassword() + "';";
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
