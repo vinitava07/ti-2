@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gpt_admin_panel/main.dart';
+import 'package:gpt_admin_panel/screens/dashboard/dashboard_presenter.dart';
 import 'package:gpt_admin_panel/screens/dashboard/dashboard_screen.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/title_large.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/primary_button.dart';
@@ -100,7 +101,9 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
-                return const DashboardScreen();
+                return DashboardScreen(
+                  presenter: DashboardPresenterImpl(),
+                );
               },
             ),
           );
