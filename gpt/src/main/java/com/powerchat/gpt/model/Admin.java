@@ -1,9 +1,5 @@
 package com.powerchat.gpt.model;
-
-import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.pbkdf2.Digest;
-import org.springframework.util.DigestUtils;
-
-import java.nio.charset.StandardCharsets;
+import com.powerchat.gpt.utils.crypto.Encrypt;
 import java.util.UUID;
 
 public class Admin {
@@ -24,10 +20,6 @@ public class Admin {
         return email;
     }
     public String getPassword() {
-        return password;
-    }
-
-    public String getEncryptedPassword() {
-        return DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
+        return Encrypt.encrypt(password);
     }
 }

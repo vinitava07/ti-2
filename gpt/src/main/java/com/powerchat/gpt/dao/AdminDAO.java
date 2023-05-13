@@ -1,13 +1,15 @@
 package com.powerchat.gpt.dao;
 
+import com.powerchat.gpt.controller.AdminController.UserLoginRequestData;
 import com.powerchat.gpt.model.Admin;
-import com.powerchat.gpt.model.User;
+import com.powerchat.gpt.utils.crypto.Encrypt;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class AdminDAO extends DAO{
@@ -19,6 +21,15 @@ public class AdminDAO extends DAO{
         return super.close();
     }
 
+    public boolean exists(UserLoginRequestData userLoginRequestData) {
+        try {
+            Admin admim = getByEmail(userLoginRequestData.email());
+            String encryptedPassword = Encrypt.encrypt(userLoginRequestData.password());
+            return Objects.equals(admim.getPassword(), encryptedPassword);
+        } catch(Exception e) {
+            return false;
+        }
+    }
     public boolean insert(Admin admin) {
         boolean status = false;
         try {
@@ -37,11 +48,11 @@ public class AdminDAO extends DAO{
         return status;
     }
 
-    public Admin getById(UUID id) {
+    public Admin getByEmail(String email) {
         Admin admin = null;
         try {
             Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM powerchat.admin WHERE id='" + id +"';";
+            String sql = "SELECT * FROM powerchat.admin WHERE email='" + email +"';";
             System.out.println(sql);
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
@@ -83,7 +94,7 @@ public class AdminDAO extends DAO{
         try {
             Statement st = connection.createStatement();
             String sql = "UPDATE powerchat.admin SET email = '" + admin.getEmail() + "', password = '"
-                    + admin.getEncryptedPassword() + "';";
+                    + admin.getPassword() + "';";
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
