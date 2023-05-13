@@ -17,7 +17,7 @@ public class AdminService {
     public String getJson() throws Exception{
         StringBuilder json = new StringBuilder();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        json.append("{\ndata:[\n");
+        json.append("{\n\"data\":[\n");
 
         for (int i = 0; i < admins.size()-1; i++) {
             json.append(ow.writeValueAsString(admins.get(i))).append(",\n");

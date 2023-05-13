@@ -9,17 +9,19 @@ import java.util.List;
 public class UserService {
 
     private final List<User> users;
+
     public UserService(List<User> users) {
         this.users = users;
     }
-    public String getJSON() throws Exception{
+
+    public String getJSON() throws Exception {
         StringBuilder json = new StringBuilder();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        json.append("{\ndata:[\n");
-        for (int i = 0; i < users.size()-1; i++) {
+        json.append("{\n\"data\":[\n");
+        for (int i = 0; i < users.size() - 1; i++) {
             json.append(ow.writeValueAsString(users.get(i))).append(",\n");
         }
-        json.append(ow.writeValueAsString(users.get(users.size() - 1))+"]\n}");
+        json.append(ow.writeValueAsString(users.get(users.size() - 1)) + "]\n}");
         return json.toString();
     }
 }

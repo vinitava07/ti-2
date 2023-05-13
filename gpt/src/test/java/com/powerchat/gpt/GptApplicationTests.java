@@ -60,7 +60,7 @@ class GptApplicationTests {
 		Timestamp timestamp = Timestamp.from(Instant.now());
 		SubscriptionDAO subscriptionDAO = new SubscriptionDAO();
 		SubscriptionService subscriptionService = new SubscriptionService();
-		Subscription subscription = new Subscription(uuid,"(31) 99882-2143","2",timestamp,true,timestamp);
+		Subscription subscription = new Subscription(uuid,"(31) 99882-2143","1",timestamp,true,timestamp);
 		subscriptionDAO.connect();
 		subscriptionDAO.insert(subscription);
 		subscriptionDAO.update(subscription);
@@ -75,7 +75,7 @@ class GptApplicationTests {
 
 	void testingQuestionJSONParse() throws Exception{
 		UUID uuid = UUID.randomUUID();
-		UUID uuid2 = UUID.fromString("48eb0581-03eb-4f41-8f03-a2a215d1280e");
+		UUID uuid2 = UUID.fromString("1a104f55-843e-4a57-8c9f-f9f7ed2eea3d");
 		Timestamp timestamp = Timestamp.from(Instant.now());
 		QuestionDAO questionDAO = new QuestionDAO();
 		QuestionService questionService = new QuestionService();
@@ -85,8 +85,8 @@ class GptApplicationTests {
 		questionDAO.update(question);
 		List<Question> questions = questionDAO.getAll();
 		questionService.parseJson(questions);
-		assertNotNull(questionService.getQuestionServiceJson());
 		System.out.println(questionService.getQuestionServiceJson());
+		assertNotNull(questionService.getQuestionServiceJson());
 	}
 
 	@Test

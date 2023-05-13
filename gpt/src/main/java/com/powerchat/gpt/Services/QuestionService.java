@@ -9,20 +9,21 @@ import java.util.List;
 
 public class QuestionService {
 
-    private String json;
+    private StringBuilder json;
 
     public String getQuestionServiceJson(){
-        return json;
+        return json.toString();
     }
 
     public void parseJson(List<Question> questions) throws Exception{
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        json += "{\ndata:[\n";
+        this.json = new StringBuilder();
 
-        for (int i = 0; i < questions.size()-1; i++) {
-            json += ow.writeValueAsString(questions.get(i)) + ",\n";
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        json.append("{\n\"data\":[\n");
+        for (int i = 0; i < questions.size() - 1; i++) {
+            json.append(ow.writeValueAsString(questions.get(i))).append(",\n");
         }
-        json+=ow.writeValueAsString(questions.get(questions.size()-1)) + "]\n}";
+        json.append(ow.writeValueAsString(questions.get(questions.size() - 1)) + "]\n}");
     }
 
 }
