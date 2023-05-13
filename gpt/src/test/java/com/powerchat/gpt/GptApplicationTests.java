@@ -94,7 +94,7 @@ class GptApplicationTests {
 		UUID uuid = UUID.randomUUID();
 		AdminDAO adminDAO = new AdminDAO();
 		adminDAO.connect();
-		Admin admin = new Admin(uuid , "test@email.com" , "1234321");
+		Admin admin = new Admin(uuid , "vi@email.com" , "1234");
 		adminDAO.insert(admin);
 		adminDAO.update(admin);
 		List<Admin> admins = adminDAO.getAll();

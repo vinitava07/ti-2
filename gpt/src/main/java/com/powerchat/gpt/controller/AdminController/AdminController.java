@@ -34,6 +34,8 @@ public class AdminController {
         ObjectMapper mapper = new ObjectMapper();
         UserLoginRequestData userLoginRequestData = mapper.readValue(payload, UserLoginRequestData.class);
         AdminDAO adminDAO = new AdminDAO();
+        adminDAO.connect();
+        System.out.println(userLoginRequestData.password());
         boolean result = adminDAO.exists(userLoginRequestData);
         if (result) {
             return new ResponseEntity<>("OK", HttpStatus.OK);

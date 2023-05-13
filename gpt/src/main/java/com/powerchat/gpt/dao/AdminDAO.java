@@ -23,9 +23,12 @@ public class AdminDAO extends DAO{
 
     public boolean exists(UserLoginRequestData userLoginRequestData) {
         try {
-            Admin admim = getByEmail(userLoginRequestData.email());
+            Admin admin = getByEmail(userLoginRequestData.email());
+            System.out.println(admin.getPassword());
             String encryptedPassword = Encrypt.encrypt(userLoginRequestData.password());
-            return Objects.equals(admim.getPassword(), encryptedPassword);
+            System.out.println(encryptedPassword);
+            return encryptedPassword.equals(admin.getPassword());
+          //  return Objects.equals(admin.getPassword(), encryptedPassword);
         } catch(Exception e) {
             return false;
         }
@@ -36,7 +39,7 @@ public class AdminDAO extends DAO{
 
             Statement st = connection.createStatement();
             String sql = "INSERT INTO powerchat.admin (id, email, password) "
-                    + "VALUES ('" + admin.getId() + "' , '" + admin.getEmail() + "', '" + admin.getPassword() + "');";
+                    + "VALUES ('" + admin.getId() + "' , '" + admin.getEmail() + "', '" + Encrypt.encrypt(admin.getPassword()) + "');";
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
@@ -86,6 +89,7 @@ public class AdminDAO extends DAO{
 
     private Admin createFrom(ResultSet queryResult) throws Exception {
         UUID id = UUID.fromString(queryResult.getString("id"));
+        System.out.println("senha" + queryResult.getString("password"));
         return new Admin(id , queryResult.getString("email"), queryResult.getString("password"));
     }
 
@@ -94,7 +98,7 @@ public class AdminDAO extends DAO{
         try {
             Statement st = connection.createStatement();
             String sql = "UPDATE powerchat.admin SET email = '" + admin.getEmail() + "', password = '"
-                    + admin.getPassword() + "';";
+                    + Encrypt.encrypt(admin.getPassword()) + "';";
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();

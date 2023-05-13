@@ -20,6 +20,6 @@ public class Admin {
         return email;
     }
     public String getPassword() {
-        return Encrypt.encrypt(password);
+        return password;
     }
 }
