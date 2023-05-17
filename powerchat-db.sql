@@ -33,5 +33,5 @@ create table if not exists powerchat.question (
 create table if not exists powerchat.admin (
  id uuid default gen_random_uuid() primary key,
  email varchar(255),
- password varchar(255),
+ password varchar(255)
 );
