@@ -13,8 +13,10 @@ name varchar(255),
 monthly_prompt_limit numeric
 );
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 create table if not exists powerchat.subscription (
-id uuid default gen_random_uuid() primary key,
+id uuid default uuid_generate_v4() primary key,
 subscription_user varchar(50) references powerchat.user(phone_number),
 plan varchar(255) references powerchat.plan(id),
 created_at timestamp,
@@ -27,11 +29,11 @@ create table if not exists powerchat.question (
  question text,
  reply text,
  created_at timestamp,
- id uuid default gen_random_uuid() primary key
+ id uuid default uuid_generate_v4() primary key
 );
 
 create table if not exists powerchat.admin (
- id uuid default gen_random_uuid() primary key,
+ id uuid default uuid_generate_v4() primary key,
  email varchar(255),
  password varchar(255)
 );
