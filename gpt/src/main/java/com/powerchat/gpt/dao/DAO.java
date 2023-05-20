@@ -16,14 +16,13 @@ public class DAO {
         String serverName = "localhost";
         String myDatabase = "powerchat";
         int port = 5432;
-        String url = "jdbc:postgresql://" + serverName + ":" + port +"/" + myDatabase;
-        String username = "ti2cc";
-        String password = "123";
+        String url = "jdbc:postgresql://ti2cc.postgres.database.azure.com:5432/powerchat?user=powerchat&password=Ti%402CCpuc&sslmode=require";
+        String username = "ti2cc@powerchat";
+        String password = "Ti@2CCpuc";
         boolean connetctionStatus = false;
-
         try {
             Class.forName(driverName);
-            connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection(url);
             System.out.println("Conexão efetuada com o postgres!");
             connetctionStatus = true;
         } catch (ClassNotFoundException e) {
