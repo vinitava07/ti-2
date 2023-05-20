@@ -3,6 +3,7 @@ package com.powerchat.gpt.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.RequestPayload;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.powerchat.gpt.BananaHttpClient;
 import com.powerchat.gpt.PowerChatHttpClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class FacebookWebhookController {
         //TODO: - call python_bridge with AI model.
         //TODO: - call openAI api
         System.out.println(message);
+//        BananaHttpClient bananaHttpClient = new BananaHttpClient();
+//        String bananaResponse = bananaHttpClient.requestBananaDevCompletion(message);
+      //  System.out.println(bananaResponse);
         PowerChatHttpClient powerChatHttpClient = new PowerChatHttpClient();
         String gptResponse = powerChatHttpClient.requestOpenAICompletion(message);
         System.out.println(gptResponse);
