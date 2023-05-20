@@ -20,6 +20,8 @@ public class FacebookWebhookController {
         ObjectMapper objectMapper = new ObjectMapper();
         WhatsAppBusinessAccount waAccount = objectMapper.readValue(payload, WhatsAppBusinessAccount.class);
         String message = waAccount.getSentMessage();
+        //TODO: - call python_bridge with AI model.
+        //TODO: - call openAI api
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }
