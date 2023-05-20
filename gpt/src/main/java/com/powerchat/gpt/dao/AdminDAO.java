@@ -98,7 +98,7 @@ public class AdminDAO extends DAO{
         try {
             Statement st = connection.createStatement();
             String sql = "UPDATE powerchat.admin SET email = '" + admin.getEmail() + "', password = '"
-                    + Encrypt.encrypt(admin.getPassword()) + "';";
+                    + Encrypt.encrypt(admin.getPassword()) + "' WHERE id = '" + admin.getId() + "';";
             System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
