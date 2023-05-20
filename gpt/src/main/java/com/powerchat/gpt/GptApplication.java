@@ -66,7 +66,7 @@ public class GptApplication {
 	}
 	static void requestOpenAICompletion() {
 		PowerChatHttpClient client = new PowerChatHttpClient();
-		String response = client.requestOpenAICompletion();
+		String response = client.requestOpenAICompletion("texto");
 		System.out.println(response);
 	}
 }
