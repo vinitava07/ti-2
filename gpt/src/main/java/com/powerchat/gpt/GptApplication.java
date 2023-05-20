@@ -1,5 +1,7 @@
 package com.powerchat.gpt;
 
+import com.powerchat.gpt.core.ModelType;
+import com.powerchat.gpt.core.PythonBridge;
 import com.powerchat.gpt.dao.*;
 import com.powerchat.gpt.model.Plan;
 import com.powerchat.gpt.model.Question;
@@ -16,9 +18,11 @@ import java.util.UUID;
 @SpringBootApplication
 public class GptApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws  Exception{
 		SpringApplication.run(GptApplication.class, args);
 		// requestOpenAICompletion();
+		ModelType type = PythonBridge.classify("Desenhe um retrato do Winston Churchill");
+		System.out.println(type);
 	}
 
 	static void testingQuestionDAO() {
