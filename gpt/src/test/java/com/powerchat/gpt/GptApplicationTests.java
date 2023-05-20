@@ -20,7 +20,7 @@ class GptApplicationTests {
 	@Test
 	void requestOpenAICompletionReturnsNonEmptyValue() {
 		PowerChatHttpClient client = new PowerChatHttpClient();
-		String response = client.requestOpenAICompletion();
+		String response = client.requestOpenAICompletion("teste");
 		assertNotNull(response);
 	}
 
