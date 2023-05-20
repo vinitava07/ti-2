@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ad8c7a58-434a-4aa2-9a83-784b0a646737" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/gpt_admin_panel/android">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2PhIGjWR69OPMdLTODAKOLRtSUw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "last_opened_file_path": "/home/jurka/snap/flutter/common/flutter/bin/cache",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "dart.settings"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/core" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.GptApplication">
+    <configuration name="GptApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.powerchat.gpt.GptApplication" />
+      <module name="gpt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.powerchat.gpt.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GptApplicationTests.adminConnectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gpt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.powerchat.gpt.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.powerchat.gpt" />
+      <option name="MAIN_CLASS_NAME" value="com.powerchat.gpt.GptApplicationTests" />
+      <option name="METHOD_NAME" value="adminConnectionTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GptApplicationTests.testUserJsonParse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gpt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.powerchat.gpt.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.powerchat.gpt" />
+      <option name="MAIN_CLASS_NAME" value="com.powerchat.gpt.GptApplicationTests" />
+      <option name="METHOD_NAME" value="testUserJsonParse" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GptApplicationTests.testingPlanJsonParse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gpt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.powerchat.gpt.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.powerchat.gpt" />
+      <option name="MAIN_CLASS_NAME" value="com.powerchat.gpt.GptApplicationTests" />
+      <option name="METHOD_NAME" value="testingPlanJsonParse" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GptApplicationTests.testingSubscriptionJsonParse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gpt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.powerchat.gpt.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.powerchat.gpt" />
+      <option name="MAIN_CLASS_NAME" value="com.powerchat.gpt.GptApplicationTests" />
+      <option name="METHOD_NAME" value="testingSubscriptionJsonParse" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="android" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="android" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.GptApplication" />
+        <item itemvalue="JUnit.GptApplicationTests.adminConnectionTest" />
+        <item itemvalue="JUnit.GptApplicationTests.testingSubscriptionJsonParse" />
+        <item itemvalue="JUnit.GptApplicationTests.testUserJsonParse" />
+        <item itemvalue="JUnit.GptApplicationTests.testingPlanJsonParse" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ad8c7a58-434a-4aa2-9a83-784b0a646737" name="Changes" comment="" />
+      <created>1683902796498</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1683902796498</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
