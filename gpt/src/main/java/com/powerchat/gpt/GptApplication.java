@@ -20,6 +20,7 @@ public class GptApplication {
 
 	public static void main(String[] args) throws  Exception{
 		SpringApplication.run(GptApplication.class, args);
+		//requestBananaApi();
 		// requestOpenAICompletion();
 		ModelType type = PythonBridge.classify("Desenhe um retrato do Winston Churchill");
 		System.out.println(type);
@@ -71,6 +72,11 @@ public class GptApplication {
 	static void requestOpenAICompletion() {
 		PowerChatHttpClient client = new PowerChatHttpClient();
 		String response = client.requestOpenAICompletion("texto");
+		System.out.println(response);
+	}
+	static void requestBananaApi() {
+		BananaHttpClient client = new BananaHttpClient();
+		String response = client.requestBananaDevCompletion("texto");
 		System.out.println(response);
 	}
 }
