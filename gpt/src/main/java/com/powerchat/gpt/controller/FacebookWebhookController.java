@@ -26,8 +26,8 @@ public class FacebookWebhookController {
     public ResponseEntity<String> getFacebookWebhookMessage(@RequestBody String payload) throws Exception {
         System.out.println(payload);
         ObjectMapper objectMapper = new ObjectMapper();
-        WhatsAppBusinessAccount waAccount = objectMapper.readValue(payload, WhatsAppBusinessAccount.class);
-        String message = waAccount.getSentMessage();
+      //  WhatsAppBusinessAccount waAccount = objectMapper.readValue(payload, WhatsAppBusinessAccount.class);
+        String message = "Qual a idade do silvio santos?";
         ModelType type = PythonBridge.classify(message);
         process(message, type);
         return new ResponseEntity<>("", HttpStatus.OK);
@@ -37,9 +37,10 @@ public class FacebookWebhookController {
         switch (type) {
             case text -> {
                 PowerChatHttpClient powerChatHttpClient = new PowerChatHttpClient();
-//                String gptResponse = powerChatHttpClient.requestOpenAICompletion(message);
-                System.out.println("calling process");
-                messageController.sendReplyMessage("5561981849449", "Teste");
+                String gptResponse = powerChatHttpClient.requestOpenAICompletion(message);
+                System.out.println(gptResponse);
+                messageController = new FacebookMessageController();
+                messageController.sendReplyMessage("5531971647983", gptResponse);
             }
             case image -> {
                 BananaHttpClient bananaHttpClient = new BananaHttpClient();

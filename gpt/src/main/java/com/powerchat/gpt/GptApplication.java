@@ -1,5 +1,6 @@
 package com.powerchat.gpt;
 
+import com.powerchat.gpt.controller.FacebookWebhookController;
 import com.powerchat.gpt.core.ModelType;
 import com.powerchat.gpt.core.PythonBridge;
 import com.powerchat.gpt.dao.*;
@@ -20,8 +21,10 @@ public class GptApplication {
 
 	public static void main(String[] args) throws  Exception{
 		SpringApplication.run(GptApplication.class, args);
+//		FacebookWebhookController facebookWebhookController = new FacebookWebhookController();
+//		facebookWebhookController.getFacebookWebhookMessage("5531971647983");
 		//requestBananaApi();
-		// requestOpenAICompletion();
+		//requestOpenAICompletion();
 //		ModelType type = PythonBridge.classify("Desenhe um retrato do Winston Churchill");
 //		System.out.println(type);
 	}
@@ -71,7 +74,7 @@ public class GptApplication {
 	}
 	static void requestOpenAICompletion() {
 		PowerChatHttpClient client = new PowerChatHttpClient();
-		String response = client.requestOpenAICompletion("texto");
+		String response = client.requestOpenAICompletion("Qual a idade do silvio santos?");
 		System.out.println(response);
 	}
 	static void requestBananaApi() {

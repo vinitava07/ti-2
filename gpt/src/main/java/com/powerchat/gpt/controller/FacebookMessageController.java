@@ -13,12 +13,13 @@ import java.nio.charset.StandardCharsets;
 
 @Service
 public class FacebookMessageController{
-    private String accessToken = "EAAKQ98n00ZBIBALEsbzkZC6RAJg3IZBMdwvdH5QfYEePQffJj2hjSrcZBILHgV8dVJgX60x4TiqSQNlQFasoliJf2aF1GeVjj4PZBZBiLYz0BKZAs3JYjfnylUQMEh2UGUIDElupG8zZAOEDOpGZBZBgO6X6ZAZCQcjF4MOqLhkrZCJ1OWzm5CteRYZBZA5DXdU1YI1f4k5x0ZBqemJn8NfZAtis1LngRiHZC8suLEr3kZD";
-    private String phoneID = "106406395761880";
+    private static String accessToken = "EAAKQ98n00ZBIBALEsbzkZC6RAJg3IZBMdwvdH5QfYEePQffJj2hjSrcZBILHgV8dVJgX60x4TiqSQNlQFasoliJf2aF1GeVjj4PZBZBiLYz0BKZAs3JYjfnylUQMEh2UGUIDElupG8zZAOEDOpGZBZBgO6X6ZAZCQcjF4MOqLhkrZCJ1OWzm5CteRYZBZA5DXdU1YI1f4k5x0ZBqemJn8NfZAtis1LngRiHZC8suLEr3kZD";
+    private static String phoneID = "106406395761880";
 
     public void sendReplyMessage(String recipientId, String messageText) {
         try {
             String requestBody = createTextRequestBody(recipientId, messageText);
+            System.out.println(requestBody);
             final HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI("https://graph.facebook.com/v14.0/" + phoneID + "/messages"))
                     .header("Authorization", "Bearer " + accessToken)
@@ -27,7 +28,7 @@ public class FacebookMessageController{
                     .build();
             HttpClient client = HttpClient.newHttpClient();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println("Did send" + response.body());
+         //   System.out.println("Did send" + response.body());
         } catch (Exception e) {
             System.out.println("Error sending reply message: " + e.getMessage());
         }
@@ -60,7 +61,6 @@ public class FacebookMessageController{
         requestBodyJson.put("recipient_type", "individual");
         requestBodyJson.put("to", recipientId);
         requestBodyJson.put("type", "text");
-
         ObjectNode textJson = objectMapper.createObjectNode();
         textJson.put("body", messageText);
         requestBodyJson.put("text", textJson);
