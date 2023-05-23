@@ -17,7 +17,7 @@ public class BananaHttpClient {
                 .build();
     }
 
-    public String requestBananaDevCompletion(String question) {
+    public String requestBananaDevCompletion(String prompt) {
 
         String t = "\t{\n" +
                 "\t\t\"apiKey\": \"90a84b06-eb21-4e11-a581-89cac46d8832\",\n" +
@@ -25,7 +25,7 @@ public class BananaHttpClient {
                 "\t\t\"modelInputs\": {\n" +
                 "\t\t\t\"endpoint\": \"txt2img\",\n" +
                 "\t\t\t\"params\": {\n" +
-                "\t\t\t\t\"prompt\": \"Generate me an image of Atlantis with outstanding architecture low-angle viewUnreal engine 5, cinematic, low angle(((mdjrny-v4 style))), ((intricate)), ((highly detailed)), depth of field, masterpiece, award-winning, denoised, fine art, ((professionally color graded))\",\n" +
+                "\t\t\t\t\"prompt\": \"" + prompt + " low-angle viewUnreal engine 5, cinematic, low angle(((mdjrny-v4 style))), ((intricate)), ((highly detailed)), depth of field, masterpiece, award-winning, denoised, fine art, ((professionally color graded))\",\n" +
                 "\t\t\t\t\"negativePrompt\": \"bad art\",\n" +
                 "\t\t\t\t\"steps\": 25,\n" +
                 "\t\t\t\t\"sampler_name\": \"Euler a\",\n" +

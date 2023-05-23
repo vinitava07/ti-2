@@ -22,8 +22,8 @@ public class GptApplication {
 		SpringApplication.run(GptApplication.class, args);
 		//requestBananaApi();
 		// requestOpenAICompletion();
-		ModelType type = PythonBridge.classify("Desenhe um retrato do Winston Churchill");
-		System.out.println(type);
+//		ModelType type = PythonBridge.classify("Desenhe um retrato do Winston Churchill");
+//		System.out.println(type);
 	}
 
 	static void testingQuestionDAO() {

@@ -5,6 +5,9 @@ import com.fasterxml.jackson.core.util.RequestPayload;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.powerchat.gpt.BananaHttpClient;
 import com.powerchat.gpt.PowerChatHttpClient;
+import com.powerchat.gpt.core.ModelType;
+import com.powerchat.gpt.core.PythonBridge;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,23 +19,35 @@ import java.util.List;
 @RestController
 public class FacebookWebhookController {
 
+    @Autowired
+    FacebookMessageController messageController;
+
     @PostMapping("meta-whatsapp-webhook")
-    public ResponseEntity<String> getFacebookWebhookMessage(@RequestBody String payload) throws JsonProcessingException {
+    public ResponseEntity<String> getFacebookWebhookMessage(@RequestBody String payload) throws Exception {
         System.out.println(payload);
         ObjectMapper objectMapper = new ObjectMapper();
         WhatsAppBusinessAccount waAccount = objectMapper.readValue(payload, WhatsAppBusinessAccount.class);
         String message = waAccount.getSentMessage();
-        //TODO: - call python_bridge with AI model.
-        //TODO: - call openAI api
-        System.out.println(message);
-//        BananaHttpClient bananaHttpClient = new BananaHttpClient();
-//        String bananaResponse = bananaHttpClient.requestBananaDevCompletion(message);
-      //  System.out.println(bananaResponse);
-        PowerChatHttpClient powerChatHttpClient = new PowerChatHttpClient();
-        String gptResponse = powerChatHttpClient.requestOpenAICompletion(message);
-        System.out.println(gptResponse);
+        ModelType type = PythonBridge.classify(message);
+        process(message, type);
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(gptResponse, HttpStatus.OK);
+    private void process(String message, ModelType type) {
+        switch (type) {
+            case text -> {
+                PowerChatHttpClient powerChatHttpClient = new PowerChatHttpClient();
+//                String gptResponse = powerChatHttpClient.requestOpenAICompletion(message);
+                System.out.println("calling process");
+                messageController.sendReplyMessage("5561981849449", "Teste");
+            }
+            case image -> {
+                BananaHttpClient bananaHttpClient = new BananaHttpClient();
+                String bananaResponse = bananaHttpClient.requestBananaDevCompletion(message);
+                //CALL S3 to host.
+                messageController.sendReplyImage("5561981849449", "");
+            }
+        }
     }
 }
 

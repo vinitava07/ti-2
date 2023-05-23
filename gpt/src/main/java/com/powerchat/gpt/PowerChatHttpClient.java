@@ -28,7 +28,7 @@ public class PowerChatHttpClient {
 				.header("Content-Type", "application/json")
 				.POST(HttpRequest.BodyPublishers.ofString("\t{\n" +
 						"\t\t\"model\": \"text-davinci-003\",\n" +
-						"\t\t\"prompt\": \""+question+"\",\n" +
+						"\t\t\"prompt\": \"" + "Returns the following question reply as a JSON in the following format: {\"text\": \"your reply\"}" + question +"\",\n" +
 						"\t\t\"temperature\": 0,\n" +
 						"\t\t\"max_tokens\": 50\n" +
 						"\t\t}"))
