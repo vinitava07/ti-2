@@ -44,6 +44,9 @@ class _InfoScreenState extends State<InfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.darkBG,
+      ),
       backgroundColor: AppColors.darkBG,
       body: BorderedContainer(
         child: Center(child: buildListForType()),
