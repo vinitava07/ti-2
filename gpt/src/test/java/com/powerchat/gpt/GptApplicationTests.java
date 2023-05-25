@@ -42,7 +42,7 @@ class GptApplicationTests {
 	void testingPlanJsonParse() throws Exception {
 		PlanDAO planDAO = new PlanDAO();
 
-		Plan plan = new Plan("3","free",30);
+		Plan plan = new Plan("free","free",30);
 		planDAO.connect();
 		planDAO.insert(plan);
 		planDAO.update(plan);
@@ -60,7 +60,7 @@ class GptApplicationTests {
 		Timestamp timestamp = Timestamp.from(Instant.now());
 		SubscriptionDAO subscriptionDAO = new SubscriptionDAO();
 		SubscriptionService subscriptionService = new SubscriptionService();
-		Subscription subscription = new Subscription(uuid,"(31) 99882-2143","1",timestamp,true,timestamp);
+		Subscription subscription = new Subscription(uuid,"(31) 99921-2143","free",timestamp,true,timestamp);
 		subscriptionDAO.connect();
 		subscriptionDAO.insert(subscription);
 		subscriptionDAO.update(subscription);
