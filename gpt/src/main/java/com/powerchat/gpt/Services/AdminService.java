@@ -3,9 +3,11 @@ package com.powerchat.gpt.Services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.powerchat.gpt.model.Admin;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AdminService {
 
     private final List<Admin> admins;

@@ -2,13 +2,22 @@ package com.powerchat.gpt.Services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.powerchat.gpt.dao.SubscriptionDAO;
+import com.powerchat.gpt.dao.UserDAO;
 import com.powerchat.gpt.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
+@Service
 public class UserService {
 
     private final List<User> users;
+
+    @Autowired
+    SubscriptionService subscriptionService;
 
     public UserService(List<User> users) {
         this.users = users;
@@ -23,5 +32,20 @@ public class UserService {
         }
         json.append(ow.writeValueAsString(users.get(users.size() - 1)) + "]\n}");
         return json.toString();
+    }
+
+    public UUID createUserIfDoesNotExists(String name, String phoneNumber) {
+        UserDAO dao = new UserDAO();
+        dao.connect();
+        User existingUser = dao.getById(phoneNumber);
+        if (existingUser == null) {
+            User newUser = new User(name, "some@email.com", phoneNumber);
+            dao.insert(newUser);
+            return subscriptionService.createSubscription(phoneNumber).id;
+        } else {
+            SubscriptionDAO subsDao = new SubscriptionDAO();
+            subsDao.connect();
+            return subsDao.getByUserId(phoneNumber).id;
+        }
     }
 }

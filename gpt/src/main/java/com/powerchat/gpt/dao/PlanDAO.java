@@ -28,7 +28,7 @@ public class PlanDAO extends DAO {
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO powerchat.plan (id, name, monthly_prompt_limit) "
-                    + "VALUES (" + plan.id + ", '" + plan.name + "', '"
+                    + "VALUES ('" + plan.id + "', '" + plan.name + "', '"
                     + plan.monthlyPromptLimit + "');";
             System.out.println(sql);
             st.executeUpdate(sql);

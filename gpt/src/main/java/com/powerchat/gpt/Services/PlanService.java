@@ -3,9 +3,11 @@ package com.powerchat.gpt.Services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.powerchat.gpt.model.Plan;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PlanService {
 
     private final List<Plan> plans;

@@ -58,6 +58,23 @@ public class SubscriptionDAO extends DAO {
         return subscription;
     }
 
+    public Subscription getByUserId(String phoneNumber) {
+        Subscription subscription = null;
+        try {
+            Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String sql = "SELECT * FROM powerchat.subscription WHERE subscription_user ='" + phoneNumber +"';";
+            System.out.println(sql);
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                subscription = createFrom(rs);
+            }
+            st.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return subscription;
+    }
+
     public List<Subscription> getAll() {
         List<Subscription> subscription = new ArrayList<Subscription>();
 
