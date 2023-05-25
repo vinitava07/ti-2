@@ -2,10 +2,14 @@ package com.powerchat.gpt.Services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.powerchat.gpt.dao.QuestionDAO;
 import com.powerchat.gpt.model.Plan;
 import com.powerchat.gpt.model.Question;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 public class QuestionService {
 
@@ -13,6 +17,16 @@ public class QuestionService {
 
     public String getQuestionServiceJson(){
         return json.toString();
+    }
+
+    public void storeQuestion(String prompt, String reply, UUID subscriptionID) {
+        UUID id = UUID.randomUUID();
+        Timestamp createdAt = Timestamp.from(Instant.now());
+        Question question = new Question(id, prompt, reply, createdAt, subscriptionID);
+        QuestionDAO dao = new QuestionDAO();
+        dao.connect();
+        dao.insert(question);
+        dao.close();
     }
 
     public void parseJson(List<Question> questions) throws Exception{

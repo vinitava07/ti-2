@@ -13,8 +13,8 @@ import java.nio.charset.StandardCharsets;
 
 @Service
 public class FacebookMessageController{
-    private static String accessToken = "EAAKQ98n00ZBIBALEsbzkZC6RAJg3IZBMdwvdH5QfYEePQffJj2hjSrcZBILHgV8dVJgX60x4TiqSQNlQFasoliJf2aF1GeVjj4PZBZBiLYz0BKZAs3JYjfnylUQMEh2UGUIDElupG8zZAOEDOpGZBZBgO6X6ZAZCQcjF4MOqLhkrZCJ1OWzm5CteRYZBZA5DXdU1YI1f4k5x0ZBqemJn8NfZAtis1LngRiHZC8suLEr3kZD";
-    private static String phoneID = "106406395761880";
+    private String accessToken = "EAAKQ98n00ZBIBANVTB3jpIHnZCMm4ykZCSGsRWNyUThvCIqXosbXQWpM9sPpw64SZArF26ZBftpkIFZChrZC1ZBvBgBu2geldWqjAdzKkWZBhJZA2X1HNXXwZCbknkJtMx2LhPPZBaRFwjHVAuEViKl6U4hxLyG78ZAqKd1dyTCtFrZB8ctvdBOFDsmsZCxR2z8FtD9RSayc0pbD2ZABqbtZB2ZA6HMjhPBCzvcZAmhPsEZD";
+    private String phoneID = "106406395761880";
 
     public void sendReplyMessage(String recipientId, String messageText) {
         try {
