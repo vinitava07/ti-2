@@ -3,9 +3,9 @@ package com.powerchat.gpt.Services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.powerchat.gpt.dao.SubscriptionDAO;
-import com.powerchat.gpt.model.Question;
 import com.powerchat.gpt.model.Subscription;
 import com.powerchat.gpt.utils.CalendarManager;
+import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class SubscriptionService {
 
     private String json;

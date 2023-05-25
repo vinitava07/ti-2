@@ -16,7 +16,7 @@ public class DAO {
         String serverName = "localhost";
         String myDatabase = "powerchat";
         int port = 5432;
-        String url = "jdbc:postgresql://" + serverName + ":" + port +"/" + myDatabase;
+        String url = "jdbc:postgresql://ti2cc.postgres.database.azure.com:5432/powerchat?user=powerchat&password=Ti%402CCpuc&sslmode=require";
         String username = "ti2cc";
         String password = "123";
         boolean connetctionStatus = false;

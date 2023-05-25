@@ -6,10 +6,12 @@ import com.powerchat.gpt.dao.SubscriptionDAO;
 import com.powerchat.gpt.dao.UserDAO;
 import com.powerchat.gpt.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class UserService {
 
     private final List<User> users;
