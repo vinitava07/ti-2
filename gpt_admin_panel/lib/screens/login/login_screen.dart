@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gpt_admin_panel/main.dart';
 import 'package:gpt_admin_panel/screens/dashboard/dashboard_presenter.dart';
 import 'package:gpt_admin_panel/screens/dashboard/dashboard_screen.dart';
+import 'package:gpt_admin_panel/screens/login/login_presenter.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/title_large.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/primary_button.dart';
 import 'package:gpt_admin_panel/ui/constants/app_colors.dart';
@@ -9,7 +10,9 @@ import 'package:gpt_admin_panel/ui/constants/app_radius.dart';
 import 'package:gpt_admin_panel/ui/constants/app_spacing.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  final presenter = LoginPresenter();
+
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -17,6 +20,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget get emailField {
     return TextFormField(
+      controller: emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: const InputDecoration(
         labelText: 'email',
@@ -79,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget get passwordField {
     return TextFormField(
+      controller: passwordController,
       obscureText: true,
       decoration: const InputDecoration(
         labelText: 'password',
@@ -98,14 +106,22 @@ class _LoginScreenState extends State<LoginScreen> {
       child: const Text('Login'),
       onPressed: () {
         if (_formKey.currentState?.validate() ?? false) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return DashboardScreen(
-                  presenter: DashboardPresenterImpl(),
+          widget.presenter
+              .login(emailController.text, passwordController.text)
+              .then(
+            (success) {
+              if (success) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return DashboardScreen(
+                        presenter: DashboardPresenterImpl(),
+                      );
+                    },
+                  ),
                 );
-              },
-            ),
+              }
+            },
           );
         }
       },

@@ -28,7 +28,7 @@ class GptApplicationTests {
 	void testUserJsonParse() throws Exception{
 		UserDAO userDAO = new UserDAO();
 		userDAO.connect();
-		User user = new User("Lucas" , "lucas@email.com" , "(31) 98822-2157");
+		User user = new User("Alexandre" , "alex@email.com" , "(31) 00000-0000");
 		userDAO.insert(user);
 		userDAO.update(user);
 		List<User> users = userDAO.getAll();
@@ -75,7 +75,7 @@ class GptApplicationTests {
 
 	void testingQuestionJSONParse() throws Exception{
 		UUID uuid = UUID.randomUUID();
-		UUID uuid2 = UUID.fromString("1a104f55-843e-4a57-8c9f-f9f7ed2eea3d");
+		UUID uuid2 = UUID.fromString("5c3e8daf-b453-4896-8f04-6f7d20e67286");
 		Timestamp timestamp = Timestamp.from(Instant.now());
 		QuestionDAO questionDAO = new QuestionDAO();
 		QuestionService questionService = new QuestionService();
@@ -94,7 +94,7 @@ class GptApplicationTests {
 		UUID uuid = UUID.randomUUID();
 		AdminDAO adminDAO = new AdminDAO();
 		adminDAO.connect();
-		Admin admin = new Admin(uuid , "test@email.com" , "1234321");
+		Admin admin = new Admin(uuid , "vi@email.com" , "1234");
 		adminDAO.insert(admin);
 		adminDAO.update(admin);
 		List<Admin> admins = adminDAO.getAll();

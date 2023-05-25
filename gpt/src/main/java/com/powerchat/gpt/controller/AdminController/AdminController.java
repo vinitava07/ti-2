@@ -1,11 +1,14 @@
-package com.powerchat.gpt.controller;
+package com.powerchat.gpt.controller.AdminController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.powerchat.gpt.Services.AdminService;
 import com.powerchat.gpt.dao.AdminDAO;
 import com.powerchat.gpt.model.Admin;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,4 +28,20 @@ public class AdminController {
             return new ResponseEntity<>("Unable to get admins Json", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> handleLogin(@RequestBody String payload) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        UserLoginRequestData userLoginRequestData = mapper.readValue(payload, UserLoginRequestData.class);
+        AdminDAO adminDAO = new AdminDAO();
+        adminDAO.connect();
+        System.out.println(userLoginRequestData.password());
+        boolean result = adminDAO.exists(userLoginRequestData);
+        if (result) {
+            return new ResponseEntity<>("OK", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("User is not authorized", HttpStatus.FORBIDDEN);
+        }
+    }
 }
+

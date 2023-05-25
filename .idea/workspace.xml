@@ -4,7 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad8c7a58-434a-4aa2-9a83-784b0a646737" name="Changes" comment="" />
+    <list default="true" id="ad8c7a58-434a-4aa2-9a83-784b0a646737" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/ti-2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/controller/AdminController/UserLoginRequestData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/utils/crypto/Encrypt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gpt_admin_panel/lib/screens/login/login_presenter.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/controller/AdminController/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/dao/AdminDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/dao/AdminDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/dao/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/dao/DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/model/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/model/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gpt/src/test/java/com/powerchat/gpt/GptApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/gpt/src/test/java/com/powerchat/gpt/GptApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gpt_admin_panel/lib/core/HTTPClient.dart" beforeDir="false" afterPath="$PROJECT_DIR$/gpt_admin_panel/lib/core/HTTPClient.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gpt_admin_panel/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/gpt_admin_panel/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gpt_admin_panel/lib/screens/info/info_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/gpt_admin_panel/lib/screens/info/info_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gpt_admin_panel/lib/screens/login/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/gpt_admin_panel/lib/screens/login/login_screen.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,18 +74,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "last_opened_file_path": "/home/jurka/snap/flutter/common/flutter/bin/cache",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "dart.settings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/jurka/snap/flutter/common/flutter/bin/cache&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;dart.settings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/gpt/src/main/java/com/powerchat/gpt/core" />
@@ -164,10 +185,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.GptApplication" />
-        <item itemvalue="JUnit.GptApplicationTests.adminConnectionTest" />
+        <item itemvalue="JUnit.GptApplicationTests.testingPlanJsonParse" />
         <item itemvalue="JUnit.GptApplicationTests.testingSubscriptionJsonParse" />
         <item itemvalue="JUnit.GptApplicationTests.testUserJsonParse" />
-        <item itemvalue="JUnit.GptApplicationTests.testingPlanJsonParse" />
+        <item itemvalue="JUnit.GptApplicationTests.adminConnectionTest" />
       </list>
     </recent_temporary>
   </component>
