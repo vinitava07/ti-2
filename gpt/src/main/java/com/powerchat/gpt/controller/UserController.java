@@ -19,6 +19,7 @@ public class UserController {
             UserDAO userDAO = new UserDAO();
             userDAO.connect();
             List<User> users = userDAO.getAll();
+            userDAO.close();
             String json = new UserService(users).getJSON();
             return new ResponseEntity<>(json, HttpStatus.OK);
         } catch(Exception e) {

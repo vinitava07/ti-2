@@ -32,6 +32,7 @@ class GptApplicationTests {
 		userDAO.insert(user);
 		userDAO.update(user);
 		List<User> users = userDAO.getAll();
+		userDAO.close();
 		UserService u = new UserService(users);
 		assertNotNull(u.getJSON());
 		System.out.println(u.getJSON());
@@ -47,6 +48,7 @@ class GptApplicationTests {
 		planDAO.insert(plan);
 		planDAO.update(plan);
 		List<Plan> plans = planDAO.getAll();
+		planDAO.close();
 		PlanService planService = new PlanService(plans);
 		assertNotNull(planService.getJson());
 		System.out.println(planService.getJson());
@@ -65,6 +67,7 @@ class GptApplicationTests {
 		subscriptionDAO.insert(subscription);
 		subscriptionDAO.update(subscription);
 		List<Subscription> subscriptions = subscriptionDAO.getAll();
+		subscriptionDAO.close();
 		subscriptionService.parseJson(subscriptions);
 		assertNotNull(subscriptionService.getSubscriptionServiceJson());
 		System.out.println(subscriptionService.getSubscriptionServiceJson());
@@ -84,6 +87,7 @@ class GptApplicationTests {
 		questionDAO.insert(question);
 		questionDAO.update(question);
 		List<Question> questions = questionDAO.getAll();
+		questionDAO.close();
 		questionService.parseJson(questions);
 		System.out.println(questionService.getQuestionServiceJson());
 		assertNotNull(questionService.getQuestionServiceJson());
@@ -94,10 +98,11 @@ class GptApplicationTests {
 		UUID uuid = UUID.randomUUID();
 		AdminDAO adminDAO = new AdminDAO();
 		adminDAO.connect();
-		Admin admin = new Admin(uuid , "vi@email.com" , "1234");
+		Admin admin = new Admin(uuid , "alex@email.com" , "4312");
 		adminDAO.insert(admin);
 		adminDAO.update(admin);
 		List<Admin> admins = adminDAO.getAll();
+		adminDAO.close();
 		AdminService adm = new AdminService(admins);
 		assertNotNull(adm.getJson());
 		System.out.println(adm.getJson());

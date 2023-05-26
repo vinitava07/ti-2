@@ -22,6 +22,7 @@ public class AdminController {
             AdminDAO adminDAO = new AdminDAO();
             adminDAO.connect();
             List<Admin> admins = adminDAO.getAll();
+            adminDAO.close();
             String json = new AdminService(admins).getJson();
             return new ResponseEntity<>(json, HttpStatus.OK);
         } catch(Exception e) {
@@ -34,9 +35,10 @@ public class AdminController {
         ObjectMapper mapper = new ObjectMapper();
         UserLoginRequestData userLoginRequestData = mapper.readValue(payload, UserLoginRequestData.class);
         AdminDAO adminDAO = new AdminDAO();
-        adminDAO.connect();
         System.out.println(userLoginRequestData.password());
+        adminDAO.connect();
         boolean result = adminDAO.exists(userLoginRequestData);
+        adminDAO.close();
         if (result) {
             return new ResponseEntity<>("OK", HttpStatus.OK);
         } else {

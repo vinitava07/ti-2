@@ -35,17 +35,22 @@ public class UserService {
     }
 
     public UUID createUserIfDoesNotExists(String name, String phoneNumber) {
+        UUID uuid;
         UserDAO dao = new UserDAO();
         dao.connect();
         User existingUser = dao.getById(phoneNumber);
         if (existingUser == null) {
             User newUser = new User(name, "some@email.com", phoneNumber);
             dao.insert(newUser);
-            return subscriptionService.createSubscription(phoneNumber).id;
+            dao.close();
+            uuid = subscriptionService.createSubscription(phoneNumber).id;
         } else {
+            dao.close();
             SubscriptionDAO subsDao = new SubscriptionDAO();
             subsDao.connect();
-            return subsDao.getByUserId(phoneNumber).id;
+            uuid = subsDao.getByUserId(phoneNumber).id;
+            subsDao.close();
         }
+        return  uuid;
     }
 }
