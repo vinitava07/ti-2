@@ -21,6 +21,7 @@ public class QuestionController {
         QuestionService questionService = new QuestionService();
         questionService.parseJson(questionList);
         String json = questionService.getQuestionServiceJson();
+        questionDAO.close();
         return new ResponseEntity<>(json, HttpStatus.OK);
     }
 }
