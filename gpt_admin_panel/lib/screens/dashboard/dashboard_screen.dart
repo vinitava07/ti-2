@@ -43,18 +43,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<Widget> serviceMetrics(BuildContext context) {
     var healthState = widget.presenter.healthStatus;
     return [
-      const TitleLarge('Métricas [Widget> serviço'),
-      Row(
-        children: [
-          MediumCard(
-              text: 'Health check: $healthState',
-              onTap: () {
-                widget.presenter.checkHealth().then((_) => setState(() {}));
-              }),
-          MediumCard(text: 'OpenAI integration: ok', onTap: () {}),
-          MediumCard(text: 'FB Webhook: ok', onTap: () {}),
-          MediumCard(text: 'FB GraphQL: ok', onTap: () {}),
-        ],
+      const TitleLarge('Métricas de serviço'),
+      SingleChildScrollView(
+        child: Row(
+          children: [
+            MediumCard(
+                text: 'Health check: $healthState',
+                onTap: () {
+                  widget.presenter.checkHealth().then((_) => setState(() {}));
+                }),
+            MediumCard(text: 'OpenAI integration: ok', onTap: () {}),
+            MediumCard(text: 'FB Webhook: ok', onTap: () {}),
+            MediumCard(text: 'FB GraphQL: ok', onTap: () {}),
+          ],
+        ),
       ),
     ];
   }
@@ -65,11 +67,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 12.0),
         child: FutureBuilder(
-          future: Future.wait([widget.presenter.fetchUsersNumber()]),
+          future: Future.wait([widget.presenter.fetchUsersCount()]),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             return Row(
-              children: const [
-                TitleMedium('Usuários ativos: 2932'),
+              children: [
+                TitleMedium(
+                    'Usuários ativos: ${widget.presenter.formattedUserCount}'),
                 TitleMedium('Requisições p/ min: 64'),
                 TitleMedium('Usuários pagantes: 1294'),
               ],
