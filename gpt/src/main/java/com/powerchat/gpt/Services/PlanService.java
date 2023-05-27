@@ -10,13 +10,7 @@ import java.util.List;
 @Service
 public class PlanService {
 
-    private final List<Plan> plans;
-
-    public  PlanService(List<Plan> plans) {
-        this.plans = plans;
-    }
-
-    public String getJson() throws Exception{
+    public String getAllPlansInJson(List<Plan> plans) throws Exception{
         StringBuilder json = new StringBuilder();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         json.append("{\n\"data\":[\n");
@@ -27,4 +21,5 @@ public class PlanService {
         json.append(ow.writeValueAsString(plans.get(plans.size() - 1))+"]\n}");
         return json.toString();
     }
+
 }

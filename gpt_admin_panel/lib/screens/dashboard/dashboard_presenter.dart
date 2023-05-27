@@ -1,15 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:gpt_admin_panel/core/HTTPClient.dart';
+import 'package:gpt_admin_panel/models/contact.dart';
+import 'package:http/http.dart' as http;
 
 abstract class DashboardPresenter {
-  String get healthStatus;
+  String get serverHealthStatus;
+  String get openAIHealth;
+  String get formattedUserCount;
   Future<void> checkHealth();
-  Future<int> fetchUsersNumber();
+  Future<void> checkOpenAIHealth();
+  Future<void> fetchUsersCount();
   void listen(Function() listener);
 }
 
 class DashboardPresenterImpl with ChangeNotifier implements DashboardPresenter {
   var _healthStatus = 'ok';
+  var _openAIHealth = 'ok';
+  var _amountOfUsers = '';
 
   @override
   Future<void> checkHealth() async {
@@ -24,17 +33,41 @@ class DashboardPresenterImpl with ChangeNotifier implements DashboardPresenter {
   }
 
   @override
-  Future<int> fetchUsersNumber() async {
-    // const route = "/users_count";
-    // final client = HTTPClient(route);
-    // final response = await client.get();
-    // return response.body as int;
-    return Future.value(0);
+  Future<void> checkOpenAIHealth() async {
+    _openAIHealth = 'loading';
+    notifyListeners();
+
+    const route = "/health-openAI";
+    final client = HTTPClient(route);
+    final response = await client.get();
+    _openAIHealth = response.body;
+    notifyListeners();
   }
 
   @override
-  String get healthStatus {
+  Future<void> fetchUsersCount() async {
+    const path = "/user";
+    final client = HTTPClient(path);
+    http.Response response = await client.get();
+    final usersJson = jsonDecode(response.body);
+    final contactList = ContactList.fromJson(usersJson);
+    _amountOfUsers = contactList.data.length.toString();
+    notifyListeners();
+  }
+
+  @override
+  String get serverHealthStatus {
     return _healthStatus;
+  }
+
+  @override
+  String get openAIHealth {
+    return _openAIHealth;
+  }
+
+  @override
+  String get formattedUserCount {
+    return _amountOfUsers;
   }
 
   @override
