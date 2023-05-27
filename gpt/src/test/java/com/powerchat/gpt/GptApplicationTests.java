@@ -64,11 +64,11 @@ class GptApplicationTests {
 		SubscriptionService subscriptionService = new SubscriptionService();
 		Subscription subscription = new Subscription(uuid,"(31) 99921-2143","free",timestamp,true,timestamp);
 		subscriptionDAO.connect();
-		subscriptionDAO.insert(subscription);
-		subscriptionDAO.update(subscription);
+		//subscriptionDAO.insert(subscription);
+		//subscriptionDAO.update(subscription);
 		List<Subscription> subscriptions = subscriptionDAO.getAll();
 		subscriptionDAO.close();
-		subscriptionService.parseJson(subscriptions);
+		subscriptionService.getAllSubscriptionsInJson(subscriptions);
 		assertNotNull(subscriptionService.getSubscriptionServiceJson());
 		System.out.println(subscriptionService.getSubscriptionServiceJson());
 
@@ -107,4 +107,5 @@ class GptApplicationTests {
 		assertNotNull(adm.getJson());
 		System.out.println(adm.getJson());
 	}
+
 }
