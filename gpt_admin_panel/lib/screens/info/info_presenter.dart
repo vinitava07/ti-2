@@ -12,6 +12,7 @@ abstract class InfoPresenter {
   Future<QuestionList> getQuestions();
   Future<PlanList> getPlans();
   Future<SubscriptionList> getSubscriptions();
+  Future<void> deleteSubscription(String id);
 }
 
 class InfoPresenterImpl implements InfoPresenter {
@@ -55,4 +56,11 @@ class InfoPresenterImpl implements InfoPresenter {
     return subscriptionsList;
   }
 
+  @override
+  Future<void> deleteSubscription(String id) async {
+    final path = "/subscriptions/$id";
+    final client = HTTPClient(path);
+    await client.delete();
+    return;
+  }
 }

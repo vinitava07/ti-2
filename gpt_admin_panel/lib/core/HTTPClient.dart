@@ -14,11 +14,16 @@ class HTTPClient {
     );
   }
 
+  Future<http.Response> delete() async {
+    return await http.delete(
+      Uri.parse(_baseURL + _path),
+    );
+  }
+
   Future<http.Response> post(Map<String, String> body) async {
-    final jsonBody = json.encode(body); 
-    return await http.post(
-      Uri.parse(_baseURL + _path), body:jsonBody
-      /**
+    final jsonBody = json.encode(body);
+    return await http.post(Uri.parse(_baseURL + _path), body: jsonBody
+        /**
        * final body = {
           'name': 'Bob',
           'age': '87',
@@ -28,6 +33,6 @@ class HTTPClient {
         final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
         final response = await http.post(uri, headers: headers, body: jsonString);
        */
-    );
+        );
   }
 }

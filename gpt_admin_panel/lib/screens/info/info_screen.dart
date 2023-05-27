@@ -197,19 +197,26 @@ class _InfoScreenState extends State<InfoScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       final subscription =
                           subscriptionList.data.elementAt(index);
-                      // final id = subscription.id;
                       final id = subscription.id;
                       final plan = subscription.planId;
                       final userId = subscription.userId;
 
                       return ListTile(
                           title: Text(id.toString()),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete_forever),
+                            onPressed: () {
+                              widget.presenter
+                                  .deleteSubscription(id)
+                                  .then((_) => setState(() {}));
+                            },
+                          ),
                           subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('Subscription plan: $plan'),
                               Text('User id: $userId'),
                             ],
-                            crossAxisAlignment: CrossAxisAlignment.start,
                           ));
                     },
                     separatorBuilder: (BuildContext context, int index) {
