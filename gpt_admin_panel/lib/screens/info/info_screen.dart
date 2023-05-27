@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gpt_admin_panel/models/contact.dart';
 import 'package:gpt_admin_panel/models/plan.dart';
 import 'package:gpt_admin_panel/models/question.dart';
+import 'package:gpt_admin_panel/models/subscriptions.dart';
 import 'package:gpt_admin_panel/screens/info/info_presenter.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/bordered_container.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/headline_medium.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/title_large.dart';
 import 'package:gpt_admin_panel/ui/constants/app_colors.dart';
 
-enum InfoType { users, messages, plans }
+enum InfoType { users, messages, plans, subscriptions }
 
 class InfoScreen extends StatefulWidget {
   final InfoType type;
@@ -29,6 +30,8 @@ class _InfoScreenState extends State<InfoScreen> {
         return 'Perguntas';
       case InfoType.plans:
         return 'Planos';
+      case InfoType.subscriptions:
+        return 'Assinaturas';
     }
   }
 
@@ -53,6 +56,8 @@ class _InfoScreenState extends State<InfoScreen> {
         return buildUsersList();
       case InfoType.plans:
         return buildPlansList();
+      case InfoType.subscriptions:
+        return buildSubscriptionsList();
     }
   }
 
@@ -162,6 +167,55 @@ class _InfoScreenState extends State<InfoScreen> {
                       return const Divider();
                     },
                     itemCount: planList.data.length),
+              ),
+            ],
+          );
+        } else if (snapshot.hasError) {
+          return const Text('Error on query');
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
+    );
+  }
+
+  Widget buildSubscriptionsList() {
+    return FutureBuilder(
+      future: widget.presenter.getSubscriptions(),
+      builder:
+          (BuildContext context, AsyncSnapshot<SubscriptionList> snapshot) {
+        if (snapshot.hasData) {
+          final subscriptionList = snapshot.data!;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const HeadlineMedium('PowerChat GPT - Admin'),
+              TitleLarge(title),
+              const Divider(),
+              Flexible(
+                child: ListView.separated(
+                    itemBuilder: (BuildContext context, int index) {
+                      final subscription =
+                          subscriptionList.data.elementAt(index);
+                      // final id = subscription.id;
+                      final id = subscription.id;
+                      final plan = subscription.planId;
+                      final userId = subscription.userId;
+
+                      return ListTile(
+                          title: Text(id.toString()),
+                          subtitle: Column(
+                            children: [
+                              Text('Subscription plan: $plan'),
+                              Text('User id: $userId'),
+                            ],
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                          ));
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider();
+                    },
+                    itemCount: subscriptionList.data.length),
               ),
             ],
           );

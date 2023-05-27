@@ -22,13 +22,14 @@ public class SubscriptionService {
         return json;
     }
 
-    public void parseJson(List<Subscription> subscriptions) throws Exception{
+    public String getAllSubscriptionsInJson(List<Subscription> subscriptions) throws Exception{
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        json += "{\n\"data\":[\n";
+        json = "{\n\"data\":[\n";
         for (int i = 0; i < subscriptions.size()-1; i++) {
             json += ow.writeValueAsString(subscriptions.get(i)) + ",\n";
         }
         json+=ow.writeValueAsString(subscriptions.get(subscriptions.size()-1)) + "]\n}";
+        return json;
     }
 
     public Subscription createSubscription(String phoneNumber) {

@@ -123,6 +123,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     return InfoScreen(type: InfoType.plans);
                   }));
                 }),
+            MediumCard(
+                text: 'Assinaturas',
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return InfoScreen(type: InfoType.subscriptions);
+                  }));
+                }),
           ],
         ),
       ],
