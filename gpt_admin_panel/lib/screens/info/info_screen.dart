@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gpt_admin_panel/models/contact.dart';
+import 'package:gpt_admin_panel/models/plan.dart';
 import 'package:gpt_admin_panel/models/question.dart';
 import 'package:gpt_admin_panel/screens/info/info_presenter.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/bordered_container.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/headline_medium.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/title_large.dart';
 import 'package:gpt_admin_panel/ui/constants/app_colors.dart';
-import 'package:gpt_admin_panel/ui/constants/app_spacing.dart';
 
-enum InfoType { users, messages }
+enum InfoType { users, messages, plans }
 
 class InfoScreen extends StatefulWidget {
   final InfoType type;
@@ -21,23 +21,14 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> {
-  String get title => widget.type == InfoType.users ? 'Usuários' : 'Perguntas';
-
-  List<ListTile> get tiles {
-    if (widget.type == InfoType.users) {
-      return List<ListTile>.generate(
-          100,
-          (index) => const ListTile(
-                title: Text('user name'),
-                subtitle: Text('user plan'),
-              ));
-    } else {
-      return List<ListTile>.generate(
-        100,
-        (index) => const ListTile(
-          title: Text('Question'),
-        ),
-      );
+  String get title {
+    switch (widget.type) {
+      case InfoType.users:
+        return 'Usuários';
+      case InfoType.messages:
+        return 'Perguntas';
+      case InfoType.plans:
+        return 'Planos';
     }
   }
 
@@ -60,6 +51,8 @@ class _InfoScreenState extends State<InfoScreen> {
         return buildMessageList();
       case InfoType.users:
         return buildUsersList();
+      case InfoType.plans:
+        return buildPlansList();
     }
   }
 
@@ -94,7 +87,7 @@ class _InfoScreenState extends State<InfoScreen> {
             ],
           );
         } else if (snapshot.hasError) {
-          return Text('Error on query');
+          return const Text('Error on query');
         } else {
           return const CircularProgressIndicator();
         }
@@ -133,7 +126,7 @@ class _InfoScreenState extends State<InfoScreen> {
             ],
           );
         } else if (snapshot.hasError) {
-          return Text('Error on query');
+          return const Text('Error on query');
         } else {
           return const CircularProgressIndicator();
         }
@@ -141,12 +134,43 @@ class _InfoScreenState extends State<InfoScreen> {
     );
   }
 
-  Widget get infoList {
-    return Padding(
-      padding: EdgeInsets.all(AppSpacing.m),
-      child: ListView(
-        children: tiles,
-      ),
+  Widget buildPlansList() {
+    return FutureBuilder(
+      future: widget.presenter.getPlans(),
+      builder: (BuildContext context, AsyncSnapshot<PlanList> snapshot) {
+        if (snapshot.hasData) {
+          final planList = snapshot.data!;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const HeadlineMedium('PowerChat GPT - Admin'),
+              TitleLarge(title),
+              const Divider(),
+              Flexible(
+                child: ListView.separated(
+                    itemBuilder: (BuildContext context, int index) {
+                      final plan = planList.data.elementAt(index);
+                      // final id = plan.id;
+                      final name = plan.name;
+                      final monthLimit = plan.monthlyPromptLimit;
+                      return ListTile(
+                        title: Text(name),
+                        subtitle: Text('Monthly prompt limit: $monthLimit'),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider();
+                    },
+                    itemCount: planList.data.length),
+              ),
+            ],
+          );
+        } else if (snapshot.hasError) {
+          return const Text('Error on query');
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }

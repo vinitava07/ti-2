@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:gpt_admin_panel/core/HTTPClient.dart';
 import 'package:gpt_admin_panel/models/contact.dart';
+import 'package:gpt_admin_panel/models/plan.dart';
 import 'package:gpt_admin_panel/models/question.dart';
 import 'package:http/http.dart' as http;
 
 abstract class InfoPresenter {
   Future<ContactList> getUsers();
   Future<QuestionList> getQuestions();
+  Future<PlanList> getPlans();
 }
 
 class InfoPresenterImpl implements InfoPresenter {
@@ -28,6 +30,16 @@ class InfoPresenterImpl implements InfoPresenter {
     http.Response response = await client.get();
     final questionsJSON = jsonDecode(response.body);
     final questionsList = QuestionList.fromJson(questionsJSON);
+    return questionsList;
+  }
+
+  @override
+  Future<PlanList> getPlans() async {
+    const path = "/plans";
+    final client = HTTPClient(path);
+    http.Response response = await client.get();
+    final questionsJSON = jsonDecode(response.body);
+    final questionsList = PlanList.fromJson(questionsJSON);
     return questionsList;
   }
 }

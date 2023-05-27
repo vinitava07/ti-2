@@ -41,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   List<Widget> serviceMetrics(BuildContext context) {
-    var healthState = widget.presenter.healthStatus;
+    var healthState = widget.presenter.serverHealthStatus;
     return [
       const TitleLarge('Métricas de serviço'),
       SingleChildScrollView(
@@ -113,6 +113,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (BuildContext context) {
                     return InfoScreen(type: InfoType.messages);
+                  }));
+                }),
+            MediumCard(
+                text: 'Planos',
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return InfoScreen(type: InfoType.plans);
                   }));
                 }),
           ],
