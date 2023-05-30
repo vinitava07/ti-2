@@ -57,6 +57,22 @@ public class SubscriptionDAO extends DAO {
         }
         return subscription;
     }
+    public boolean deleteByUserId(UUID id) {
+        boolean isDeleted = false;
+        try {
+            Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String sql = "DELETE FROM powerchat.question WHERE question_subscription ='"+id +"';\nDELETE FROM powerchat.subscription WHERE id='" + id +"';";
+            System.out.println(sql);
+            ResultSet rs = st.executeQuery(sql);
+            st.close();
+            isDeleted = true;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return isDeleted;
+
+    }
+
 
     public Subscription getByUserId(String phoneNumber) {
         Subscription subscription = null;
@@ -99,6 +115,7 @@ public class SubscriptionDAO extends DAO {
         return new Subscription(id, queryResult.getString("subscription_user"), queryResult.getString("plan"), queryResult.getTimestamp("created_at"),
                  queryResult.getBoolean("is_active"), queryResult.getTimestamp("expiration_date"));
     }
+
 
     public boolean update(Subscription subscription) {
         boolean status = false;

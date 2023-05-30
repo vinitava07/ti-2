@@ -200,17 +200,36 @@ class _InfoScreenState extends State<InfoScreen> {
                       final id = subscription.id;
                       final plan = subscription.planId;
                       final userId = subscription.userId;
+                      final isAvailable = subscription.isActive;
 
                       return ListTile(
                           title: Text(id.toString()),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete_forever),
-                            onPressed: () {
-                              widget.presenter
-                                  .deleteSubscription(id)
-                                  .then((_) => setState(() {}));
-                            },
-                          ),
+                          leading: isAvailable
+                              ? Icon(Icons.check, color: Colors.lightGreen)
+                              : Icon(Icons.close, color: Colors.red),
+                          trailing: Container(
+                              width: 80,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                        Icons.disabled_by_default_rounded),
+                                    onPressed: () {
+                                      widget.presenter
+                                          .disableSubscription(id)
+                                          .then((_) => setState(() {}));
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete_forever),
+                                    onPressed: () {
+                                      widget.presenter
+                                          .deleteSubscription(id)
+                                          .then((_) => setState(() {}));
+                                    },
+                                  ),
+                                ],
+                              )),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
