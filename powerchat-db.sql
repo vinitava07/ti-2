@@ -34,6 +34,6 @@ create table if not exists powerchat.question (
 
 create table if not exists powerchat.admin (
  id uuid default uuid_generate_v4() primary key,
- email varchar(255),
+ email varchar(255) UNIQUE,
  password varchar(255)
 );
