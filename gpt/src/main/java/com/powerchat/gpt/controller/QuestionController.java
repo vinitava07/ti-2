@@ -18,7 +18,6 @@ public class QuestionController {
         QuestionDAO questionDAO = new QuestionDAO();
         questionDAO.connect();
         List<Question> questionList = questionDAO.getAll();
-        questionDAO.close();
         QuestionService questionService = new QuestionService();
         questionService.parseJson(questionList);
         String json = questionService.getQuestionServiceJson();

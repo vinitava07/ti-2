@@ -62,9 +62,9 @@ class GptApplicationTests {
 		Timestamp timestamp = Timestamp.from(Instant.now());
 		SubscriptionDAO subscriptionDAO = new SubscriptionDAO();
 		SubscriptionService subscriptionService = new SubscriptionService();
-		Subscription subscription = new Subscription(uuid,"(31) 99921-2143","free",timestamp,true,timestamp);
+		Subscription subscription = new Subscription(uuid,"(31) 00000-1111","free",timestamp,true,timestamp);
 		subscriptionDAO.connect();
-		//subscriptionDAO.insert(subscription);
+		subscriptionDAO.insert(subscription);
 		//subscriptionDAO.update(subscription);
 		List<Subscription> subscriptions = subscriptionDAO.getAll();
 		subscriptionDAO.close();
@@ -78,14 +78,14 @@ class GptApplicationTests {
 
 	void testingQuestionJSONParse() throws Exception{
 		UUID uuid = UUID.randomUUID();
-		UUID uuid2 = UUID.fromString("5c3e8daf-b453-4896-8f04-6f7d20e67286");
+		UUID uuid2 = UUID.fromString("fa6b7452-a61b-4627-9d05-76b64ffad6fc");
 		Timestamp timestamp = Timestamp.from(Instant.now());
 		QuestionDAO questionDAO = new QuestionDAO();
 		QuestionService questionService = new QuestionService();
 		Question question = new Question(uuid,"Como fazer uma bomba?","Nao construa uma bomba",timestamp,uuid2);
 		questionDAO.connect();
 		questionDAO.insert(question);
-		questionDAO.update(question);
+	//	questionDAO.update(question);
 		List<Question> questions = questionDAO.getAll();
 		questionDAO.close();
 		questionService.parseJson(questions);
