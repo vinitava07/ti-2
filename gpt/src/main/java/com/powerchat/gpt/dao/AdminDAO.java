@@ -4,6 +4,7 @@ import com.powerchat.gpt.controller.AdminController.UserLoginRequestData;
 import com.powerchat.gpt.model.Admin;
 import com.powerchat.gpt.utils.crypto.Encrypt;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -54,10 +55,10 @@ public class AdminDAO extends DAO{
     public Admin getByEmail(String email) {
         Admin admin = null;
         try {
-            Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM powerchat.admin WHERE email='" + email +"';";
-            System.out.println(sql);
-            ResultSet rs = st.executeQuery(sql);
+            String sql = "SELECT * FROM powerchat.admin WHERE email = ? ;";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 admin = createFrom(rs);
             }
