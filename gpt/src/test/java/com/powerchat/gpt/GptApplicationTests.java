@@ -1,6 +1,7 @@
 package com.powerchat.gpt;
 
 import com.powerchat.gpt.Services.*;
+import com.powerchat.gpt.controller.PlanController;
 import com.powerchat.gpt.dao.*;
 import com.powerchat.gpt.model.*;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 
 @SpringBootTest
@@ -30,6 +32,24 @@ class GptApplicationTests {
 		dao.connect();
 		dao.close();
 	}
+
+//	@Test
+//	void testCreatePlan() throws Exception {
+//		ResponseEntity<String> response = new PlanController().createPlan("{\"id\":\"test\",\"name\":\"test\",\"monthly_prompt_limit\":1000}");
+//		System.out.println(response);
+//	}
+//
+//	@Test
+//	void testPlanUpdate()throws Exception{
+//		ResponseEntity<String> response = new PlanController().updatePlan("{\"id\":\"test\",\"monthly_prompt_limit\":500}");
+//		System.out.println(response);
+//	}
+//
+//	@Test
+//	void testDeletePlan() throws Exception {
+//		ResponseEntity<String> response = new PlanController().deletePlan("test");
+//		System.out.println(response);
+//	}
 
 	// @Test
 	// void testUserJsonParse() throws Exception{
