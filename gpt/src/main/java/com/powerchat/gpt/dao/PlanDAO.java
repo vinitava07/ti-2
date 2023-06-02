@@ -98,4 +98,20 @@ public class PlanDAO extends DAO {
         }
         return status;
     }
+
+    public boolean deleteByPlanId(String id){
+        boolean status = false;
+        try{
+            Statement st = connection.createStatement();
+            String sql = "DELETE FROM powerchat.plan WHERE id = '" + id + "';";
+            System.out.println(sql);
+            st.execute(sql);
+            st.close();
+            status = true;
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return status;
+    }
 }

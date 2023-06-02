@@ -17,7 +17,7 @@ public class QuestionService {
     private StringBuilder json;
 
     public String getQuestionServiceJson(){
-        return json.toString();
+        return (json.toString() != null) ? json.toString() : "";
     }
 
     public void storeQuestion(String prompt, String reply, UUID subscriptionID) {
