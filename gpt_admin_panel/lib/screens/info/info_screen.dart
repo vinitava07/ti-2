@@ -35,6 +35,16 @@ class _InfoScreenState extends State<InfoScreen> {
     }
   }
 
+  Widget get progressIndicator {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget get errorOnQuery {
+    return const Text('Error on query');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +53,19 @@ class _InfoScreenState extends State<InfoScreen> {
       ),
       backgroundColor: AppColors.darkBG,
       body: BorderedContainer(
-        child: Center(child: buildListForType()),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const HeadlineMedium('PowerChat GPT - Admin'),
+              TitleLarge(title),
+              const Divider(),
+              Flexible(
+                child: buildListForType(),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -67,34 +89,24 @@ class _InfoScreenState extends State<InfoScreen> {
       builder: (BuildContext context, AsyncSnapshot<QuestionList> snapshot) {
         if (snapshot.hasData) {
           final questionList = snapshot.data!;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const HeadlineMedium('PowerChat GPT - Admin'),
-              TitleLarge(title),
-              const Divider(),
-              Flexible(
-                child: ListView.separated(
-                    itemBuilder: (BuildContext context, int index) {
-                      final question = questionList.data.elementAt(index);
-                      final prompt = question.prompt;
-                      final reply = question.reply;
-                      return ListTile(
-                        title: Text(prompt),
-                        subtitle: Text(reply),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const Divider();
-                    },
-                    itemCount: questionList.data.length),
-              ),
-            ],
-          );
+          return ListView.separated(
+              itemBuilder: (BuildContext context, int index) {
+                final question = questionList.data.elementAt(index);
+                final prompt = question.prompt;
+                final reply = question.reply;
+                return ListTile(
+                  title: Text(prompt),
+                  subtitle: Text(reply),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const Divider();
+              },
+              itemCount: questionList.data.length);
         } else if (snapshot.hasError) {
-          return const Text('Error on query');
+          return errorOnQuery;
         } else {
-          return const CircularProgressIndicator();
+          return progressIndicator;
         }
       },
     );
@@ -106,34 +118,24 @@ class _InfoScreenState extends State<InfoScreen> {
       builder: (BuildContext context, AsyncSnapshot<ContactList> snapshot) {
         if (snapshot.hasData) {
           final contactList = snapshot.data!;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const HeadlineMedium('PowerChat GPT - Admin'),
-              TitleLarge(title),
-              const Divider(),
-              Flexible(
-                child: ListView.separated(
-                    itemBuilder: (BuildContext context, int index) {
-                      final contact = contactList.data.elementAt(index);
-                      final email = contact.email;
-                      final name = contact.name;
-                      return ListTile(
-                        title: Text(email),
-                        subtitle: Text(name),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const Divider();
-                    },
-                    itemCount: contactList.data.length),
-              ),
-            ],
-          );
+          return ListView.separated(
+              itemBuilder: (BuildContext context, int index) {
+                final contact = contactList.data.elementAt(index);
+                final email = contact.email;
+                final name = contact.name;
+                return ListTile(
+                  title: Text(email),
+                  subtitle: Text(name),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const Divider();
+              },
+              itemCount: contactList.data.length);
         } else if (snapshot.hasError) {
-          return const Text('Error on query');
+          return errorOnQuery;
         } else {
-          return const CircularProgressIndicator();
+          return progressIndicator;
         }
       },
     );
@@ -145,35 +147,67 @@ class _InfoScreenState extends State<InfoScreen> {
       builder: (BuildContext context, AsyncSnapshot<PlanList> snapshot) {
         if (snapshot.hasData) {
           final planList = snapshot.data!;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const HeadlineMedium('PowerChat GPT - Admin'),
-              TitleLarge(title),
-              const Divider(),
-              Flexible(
-                child: ListView.separated(
-                    itemBuilder: (BuildContext context, int index) {
-                      final plan = planList.data.elementAt(index);
-                      // final id = plan.id;
-                      final name = plan.name;
-                      final monthLimit = plan.monthlyPromptLimit;
-                      return ListTile(
-                        title: Text(name),
-                        subtitle: Text('Monthly prompt limit: $monthLimit'),
+          return ListView.separated(
+              itemBuilder: (BuildContext context, int index) {
+                final plan = planList.data.elementAt(index);
+                // final id = plan.id;
+                final name = plan.name;
+                final monthLimit = plan.monthlyPromptLimit;
+                return ListTile(
+                  title: Text(name),
+                  subtitle: Text('Monthly prompt limit: $monthLimit'),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          final textController = TextEditingController();
+                          return AlertDialog(
+                            content: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Spacer(),
+                                Text(
+                                  "Editar limite mensal de perguntas",
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
+                                ),
+                                Text("plano: ${plan.name}"),
+                                Spacer(),
+                                TextField(
+                                  controller: textController,
+                                ),
+                                Spacer(),
+                                MaterialButton(
+                                  onPressed: () {
+                                    final newValue = textController.text;
+                                    if (newValue.isEmpty) {
+                                      widget.presenter
+                                          .setNewPlanLimit(plan.name, newValue);
+                                    }
+                                  },
+                                  color: AppColors.primary,
+                                  child: const Text('Salvar'),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                          );
+                        },
                       );
                     },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const Divider();
-                    },
-                    itemCount: planList.data.length),
-              ),
-            ],
-          );
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const Divider();
+              },
+              itemCount: planList.data.length);
         } else if (snapshot.hasError) {
-          return const Text('Error on query');
+          return errorOnQuery;
         } else {
-          return const CircularProgressIndicator();
+          return progressIndicator;
         }
       },
     );
@@ -186,69 +220,58 @@ class _InfoScreenState extends State<InfoScreen> {
           (BuildContext context, AsyncSnapshot<SubscriptionList> snapshot) {
         if (snapshot.hasData) {
           final subscriptionList = snapshot.data!;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const HeadlineMedium('PowerChat GPT - Admin'),
-              TitleLarge(title),
-              const Divider(),
-              Flexible(
-                child: ListView.separated(
-                    itemBuilder: (BuildContext context, int index) {
-                      final subscription =
-                          subscriptionList.data.elementAt(index);
-                      final id = subscription.id;
-                      final plan = subscription.planId;
-                      final userId = subscription.userId;
-                      final isAvailable = subscription.isActive;
+          return ListView.separated(
+              itemBuilder: (BuildContext context, int index) {
+                final subscription = subscriptionList.data.elementAt(index);
+                final id = subscription.id;
+                final plan = subscription.planId;
+                final userId = subscription.userId;
+                final isAvailable = subscription.isActive;
 
-                      return ListTile(
-                          title: Text(id.toString()),
-                          leading: isAvailable
-                              ? Icon(Icons.check, color: Colors.lightGreen)
-                              : Icon(Icons.close, color: Colors.red),
-                          trailing: Container(
-                              width: 80,
-                              child: Row(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(
-                                        Icons.disabled_by_default_rounded),
-                                    onPressed: () {
-                                      widget.presenter
-                                          .disableSubscription(id)
-                                          .then((_) => setState(() {}));
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete_forever),
-                                    onPressed: () {
-                                      widget.presenter
-                                          .deleteSubscription(id)
-                                          .then((_) => setState(() {}));
-                                    },
-                                  ),
-                                ],
-                              )),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Subscription plan: $plan'),
-                              Text('User id: $userId'),
-                            ],
-                          ));
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const Divider();
-                    },
-                    itemCount: subscriptionList.data.length),
-              ),
-            ],
-          );
+                return ListTile(
+                    title: Text(id.toString()),
+                    leading: isAvailable
+                        ? Icon(Icons.check, color: Colors.lightGreen)
+                        : Icon(Icons.close, color: Colors.red),
+                    trailing: Container(
+                        width: 80,
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon:
+                                  const Icon(Icons.disabled_by_default_rounded),
+                              onPressed: () {
+                                widget.presenter
+                                    .disableSubscription(id)
+                                    .then((_) => setState(() {}));
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete_forever),
+                              onPressed: () {
+                                widget.presenter
+                                    .deleteSubscription(id)
+                                    .then((_) => setState(() {}));
+                              },
+                            ),
+                          ],
+                        )),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Subscription plan: $plan'),
+                        Text('User id: $userId'),
+                      ],
+                    ));
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const Divider();
+              },
+              itemCount: subscriptionList.data.length);
         } else if (snapshot.hasError) {
-          return const Text('Error on query');
+          return errorOnQuery;
         } else {
-          return const CircularProgressIndicator();
+          return progressIndicator;
         }
       },
     );

@@ -14,6 +14,7 @@ abstract class InfoPresenter {
   Future<SubscriptionList> getSubscriptions();
   Future<void> deleteSubscription(String id);
   Future<void> disableSubscription(String id);
+  Future<void> setNewPlanLimit(String name, String newLimit);
 }
 
 class InfoPresenterImpl implements InfoPresenter {
@@ -68,6 +69,14 @@ class InfoPresenterImpl implements InfoPresenter {
   @override
   Future<void> disableSubscription(String id) async {
     final path = "/subscriptions/$id";
+    final client = HTTPClient(path);
+    await client.post({});
+    return;
+  }
+
+  @override
+  Future<void> setNewPlanLimit(String name, String newLimit) async {
+    final path = "/plan/$name";
     final client = HTTPClient(path);
     await client.post({});
     return;

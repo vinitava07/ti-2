@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 public class Encrypt {
 
     public static String encrypt(String value) {
-
-        return DigestUtils.md5DigestAsHex(value.getBytes(StandardCharsets.UTF_8));
+        byte[] bytes = value.getBytes(StandardCharsets.UTF_8);
+        return DigestUtils.md5DigestAsHex(bytes);
     }
 }

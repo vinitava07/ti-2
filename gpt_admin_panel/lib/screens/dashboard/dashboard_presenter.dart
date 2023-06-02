@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -9,7 +10,7 @@ abstract class DashboardPresenter {
   String get serverHealthStatus;
   String get openAIHealth;
   String get formattedUserCount;
-  Future<void> checkHealth();
+  Future<void> checkHealth({bool showLoadingLabel});
   Future<void> checkOpenAIHealth();
   Future<void> fetchUsersCount();
   void listen(Function() listener);
@@ -20,10 +21,23 @@ class DashboardPresenterImpl with ChangeNotifier implements DashboardPresenter {
   var _openAIHealth = 'ok';
   var _amountOfUsers = '';
 
+  DashboardPresenterImpl() {
+    startTimer();
+  }
+
+  void startTimer() {
+    Timer.periodic(const Duration(seconds: 1), (_) {
+      checkHealth();
+      fetchUsersCount();
+    });
+  }
+
   @override
-  Future<void> checkHealth() async {
-    _healthStatus = 'loading';
-    notifyListeners();
+  Future<void> checkHealth({showLoadingLabel = false}) async {
+    if (showLoadingLabel) {
+      _healthStatus = 'loading';
+      notifyListeners();
+    }
 
     const route = "/health";
     final client = HTTPClient(route);
