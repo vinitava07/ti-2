@@ -50,7 +50,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             MediumCard(
                 text: 'Health check: $healthState',
                 onTap: () {
-                  widget.presenter.checkHealth().then((_) => setState(() {}));
+                  widget.presenter
+                      .checkHealth(showLoadingLabel: true)
+                      .then((_) => setState(() {}));
                 }),
             MediumCard(text: 'OpenAI integration: ok', onTap: () {}),
             MediumCard(text: 'FB Webhook: ok', onTap: () {}),

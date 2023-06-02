@@ -14,6 +14,8 @@ abstract class InfoPresenter {
   Future<SubscriptionList> getSubscriptions();
   Future<void> deleteSubscription(String id);
   Future<void> disableSubscription(String id);
+  Future<void> setNewPlanLimit(String name, String newLimit);
+  Future<void> createNewPlan(String name, String newLimit);
 }
 
 class InfoPresenterImpl implements InfoPresenter {
@@ -44,6 +46,8 @@ class InfoPresenterImpl implements InfoPresenter {
     http.Response response = await client.get();
     final plansJSON = jsonDecode(response.body);
     final plansList = PlanList.fromJson(plansJSON);
+    plansList.data
+        .sort((l, r) => l.monthlyPromptLimit < r.monthlyPromptLimit ? -1 : 1);
     return plansList;
   }
 
@@ -70,6 +74,26 @@ class InfoPresenterImpl implements InfoPresenter {
     final path = "/subscriptions/$id";
     final client = HTTPClient(path);
     await client.post({});
+    return;
+  }
+
+  @override
+  Future<void> setNewPlanLimit(String id, String newLimit) async {
+    const path = "/update_plan";
+    final client = HTTPClient(path);
+    await client.post({"id": id, "monthly_prompt_limit": int.parse(newLimit)});
+    return;
+  }
+
+  @override
+  Future<void> createNewPlan(String name, String newLimit) async {
+    const path = "/create_plan";
+    final client = HTTPClient(path);
+    await client.post({
+      "id": name,
+      "name": name,
+      "monthly_prompt_limit": int.parse(newLimit)
+    });
     return;
   }
 }

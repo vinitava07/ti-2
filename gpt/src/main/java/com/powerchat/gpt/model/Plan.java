@@ -8,7 +8,7 @@ public class Plan {
 
     public final String name;
 
-    public final int monthlyPromptLimit;
+    public int monthlyPromptLimit;
 
     public Plan(String id, String name, int monthlyPromptLimit) {
         this.id = id;
