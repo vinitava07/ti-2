@@ -29,7 +29,7 @@ public class PowerChatHttpClient {
 	public String requestOpenAICompletion(String question) {
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create("https://api.openai.com/v1/completions"))
-				.header("Authorization", "Bearer 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")
+				.header("Authorization", "Bearer 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")
 				.header("Content-Type", "application/json")
 				.POST(HttpRequest.BodyPublishers.ofString("\t{\n" +
 						"\t\t\"model\": \"text-davinci-003\",\n" +
