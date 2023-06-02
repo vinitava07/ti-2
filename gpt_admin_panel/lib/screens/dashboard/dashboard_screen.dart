@@ -75,8 +75,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 TitleMedium(
                     'Usuários ativos: ${widget.presenter.formattedUserCount}'),
-                TitleMedium('Requisições p/ min: 64'),
-                TitleMedium('Usuários pagantes: 1294'),
               ],
             );
           },

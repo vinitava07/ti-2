@@ -55,9 +55,10 @@ public class FacebookWebhookController {
             }
             case image -> {
                 BananaHttpClient bananaHttpClient = new BananaHttpClient();
-                String bananaResponse = bananaHttpClient.requestBananaDevCompletion(message);
+                //String bananaResponse = bananaHttpClient.requestBananaDevCompletion(message);
                 //CALL S3 to host.
-                messageController.sendReplyImage("5561981849449", "");
+                System.out.println("calling image");
+                messageController.sendReplyMessage("5531971647983", "Uma imagem está sendo gerada");
             }
         }
     }
