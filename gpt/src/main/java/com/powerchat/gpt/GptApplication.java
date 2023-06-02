@@ -1,6 +1,7 @@
 package com.powerchat.gpt;
 
 import com.powerchat.gpt.controller.FacebookWebhookController;
+import com.powerchat.gpt.controller.json_mapper_models.BananaImage;
 import com.powerchat.gpt.core.ModelType;
 import com.powerchat.gpt.core.PythonBridge;
 import com.powerchat.gpt.dao.*;
@@ -11,6 +12,7 @@ import com.powerchat.gpt.model.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.IOException;
 import java.net.http.HttpClient;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -77,9 +79,9 @@ public class GptApplication {
 		String response = client.requestOpenAICompletion("Qual a idade do silvio santos?");
 		System.out.println(response);
 	}
-	static void requestBananaApi() {
+	static void requestBananaApi() throws IOException, InterruptedException {
 		BananaHttpClient client = new BananaHttpClient();
-		String response = client.requestBananaDevCompletion("texto");
+		BananaImage response = client.requestBananaDevCompletion("texto");
 		System.out.println(response);
 	}
 }

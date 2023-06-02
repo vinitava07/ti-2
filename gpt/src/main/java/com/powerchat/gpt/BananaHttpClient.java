@@ -1,5 +1,9 @@
 package com.powerchat.gpt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.powerchat.gpt.controller.json_mapper_models.BananaImage;
+
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -17,7 +21,7 @@ public class BananaHttpClient {
                 .build();
     }
 
-    public String requestBananaDevCompletion(String prompt) {
+    public BananaImage requestBananaDevCompletion(String prompt) throws IOException, InterruptedException {
 
         String t = "\t{\n" +
                 "\t\t\"apiKey\": \"90a84b06-eb21-4e11-a581-89cac46d8832\",\n" +
@@ -46,11 +50,13 @@ public class BananaHttpClient {
                 .POST(HttpRequest.BodyPublishers.ofString(t))
                 .build();
         try {
-            return client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            String body = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(body, BananaImage.class);
         } catch (Exception e) {
             System.out.println("Shit happened: " + e);
+            throw e;
         }
-        return "";
     }
 }
 
