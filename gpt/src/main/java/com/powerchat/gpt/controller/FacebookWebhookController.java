@@ -38,11 +38,12 @@ public class FacebookWebhookController {
         WhatsAppBusinessAccount waAccount = objectMapper.readValue(payload, WhatsAppBusinessAccount.class);
         String message = waAccount.getSentMessage();
         UUID subscriptionID = userService.createUserIfDoesNotExists(waAccount.getName(), waAccount.getPhoneNumber());
-        process(message, subscriptionID);
+        String phoneNumber = waAccount.getPhoneNumber();
+        process(message, subscriptionID, phoneNumber);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
-    private void process(String message, UUID subscriptionID) throws Exception {
+    private void process(String message, UUID subscriptionID, String phoneNumber) throws Exception {
         ModelType type = PythonBridge.classify(message);
         switch (type) {
             case text -> {
@@ -51,14 +52,14 @@ public class FacebookWebhookController {
                 System.out.println(gptResponse);
                 messageController = new FacebookMessageController();
                 questionService.storeQuestion(message, gptResponse, subscriptionID);
-                messageController.sendReplyMessage("5531971647983", gptResponse);
+                messageController.sendReplyMessage(phoneNumber, gptResponse);
             }
             case image -> {
                 BananaHttpClient bananaHttpClient = new BananaHttpClient();
                 //String bananaResponse = bananaHttpClient.requestBananaDevCompletion(message);
                 //CALL S3 to host.
                 System.out.println("calling image");
-                messageController.sendReplyMessage("5531971647983", "Uma imagem está sendo gerada");
+                messageController.sendReplyMessage(phoneNumber, "Uma imagem está sendo gerada");
             }
         }
     }
