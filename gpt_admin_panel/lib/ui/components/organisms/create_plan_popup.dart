@@ -11,38 +11,41 @@ class CreatePlanPopup extends StatelessWidget {
     final nameController = TextEditingController();
     final limitContoller = TextEditingController();
     return AlertDialog(
-      content: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Spacer(),
-          Text(
-            "Criar novo plano:",
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const Spacer(),
-          TextField(
-            decoration: const InputDecoration(hintText: 'Nome'),
-            controller: nameController,
-          ),
-          const Spacer(),
-          TextField(
-            decoration:
-                const InputDecoration(hintText: 'Limite de perguntas mensal'),
-            controller: limitContoller,
-          ),
-          MaterialButton(
-            onPressed: () {
-              final name = nameController.text;
-              final limit = limitContoller.text;
-              if (name.isNotEmpty && limit.isNotEmpty) {
-                onCreate(name, limit);
-              }
-            },
-            color: AppColors.primary,
-            child: const Text('Salvar'),
-          ),
-          const Spacer(),
-        ],
+      content: SizedBox(
+        height: 440,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(),
+            Text(
+              "Criar novo plano:",
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const Spacer(),
+            TextField(
+              decoration: const InputDecoration(hintText: 'Nome'),
+              controller: nameController,
+            ),
+            const Spacer(),
+            TextField(
+              decoration:
+                  const InputDecoration(hintText: 'Limite de perguntas mensal'),
+              controller: limitContoller,
+            ),
+            MaterialButton(
+              onPressed: () {
+                final name = nameController.text;
+                final limit = limitContoller.text;
+                if (name.isNotEmpty && limit.isNotEmpty) {
+                  onCreate(name, limit);
+                }
+              },
+              color: AppColors.primary,
+              child: const Text('Salvar'),
+            ),
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }
