@@ -20,7 +20,7 @@ class HTTPClient {
     );
   }
 
-  Future<http.Response> post(Map<String, String> body) async {
+  Future<http.Response> post(Map<String, dynamic> body) async {
     final jsonBody = json.encode(body);
     return await http.post(Uri.parse(_baseURL + _path), body: jsonBody);
   }

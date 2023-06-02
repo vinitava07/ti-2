@@ -7,6 +7,8 @@ import 'package:gpt_admin_panel/screens/info/info_presenter.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/bordered_container.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/headline_medium.dart';
 import 'package:gpt_admin_panel/ui/components/atoms/title_large.dart';
+import 'package:gpt_admin_panel/ui/components/molecules/list_tiles/plan_list_tile.dart';
+import 'package:gpt_admin_panel/ui/components/organisms/create_plan_popup.dart';
 import 'package:gpt_admin_panel/ui/constants/app_colors.dart';
 
 enum InfoType { users, messages, plans, subscriptions }
@@ -58,7 +60,13 @@ class _InfoScreenState extends State<InfoScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const HeadlineMedium('PowerChat GPT - Admin'),
-              TitleLarge(title),
+              Row(
+                children: [
+                  TitleLarge(title),
+                  const Spacer(),
+                  addPlanButtonIfCase,
+                ],
+              ),
               const Divider(),
               Flexible(
                 child: buildListForType(),
@@ -68,6 +76,29 @@ class _InfoScreenState extends State<InfoScreen> {
         ),
       ),
     );
+  }
+
+  Widget get addPlanButtonIfCase {
+    switch (widget.type) {
+      case InfoType.plans:
+        return IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => CreatePlanPopup(
+                  onCreate: (name, limit) {
+                    widget.presenter.createNewPlan(name, limit).then((_) {
+                      Navigator.of(context).pop();
+                      setState(() {});
+                    });
+                  },
+                ),
+              );
+            },
+            icon: const Icon(Icons.add));
+      default:
+        return const SizedBox();
+    }
   }
 
   Widget buildListForType() {
@@ -150,55 +181,16 @@ class _InfoScreenState extends State<InfoScreen> {
           return ListView.separated(
               itemBuilder: (BuildContext context, int index) {
                 final plan = planList.data.elementAt(index);
-                // final id = plan.id;
                 final name = plan.name;
                 final monthLimit = plan.monthlyPromptLimit;
-                return ListTile(
-                  title: Text(name),
-                  subtitle: Text('Monthly prompt limit: $monthLimit'),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          final textController = TextEditingController();
-                          return AlertDialog(
-                            content: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Spacer(),
-                                Text(
-                                  "Editar limite mensal de perguntas",
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall,
-                                ),
-                                Text("plano: ${plan.name}"),
-                                Spacer(),
-                                TextField(
-                                  controller: textController,
-                                ),
-                                Spacer(),
-                                MaterialButton(
-                                  onPressed: () {
-                                    final newValue = textController.text;
-                                    if (newValue.isEmpty) {
-                                      widget.presenter
-                                          .setNewPlanLimit(plan.name, newValue);
-                                    }
-                                  },
-                                  color: AppColors.primary,
-                                  child: const Text('Salvar'),
-                                ),
-                                Spacer(),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                );
+                return PlanListTile(
+                    presenter: widget.presenter,
+                    name: name,
+                    monthLimit: monthLimit,
+                    onReload: () {
+                      Navigator.of(context).pop();
+                      setState(() {});
+                    });
               },
               separatorBuilder: (BuildContext context, int index) {
                 return const Divider();
